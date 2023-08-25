@@ -177,6 +177,19 @@ M.configure = function()
         vim.lsp.buf.format()
       end, { desc = 'Format current buffer with LSP' })
     end
+
+    require 'which-key'.register({
+      c = {
+        name = 'code',
+      }
+    }, { prefix = '<leader>' })
+
+    -- Diagnostic keymaps
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+    vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+    vim.keymap.set('n', '<leader>cd', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+    vim.keymap.set('n', '<leader>cD', vim.diagnostic.setloclist, { desc = 'Search workspace diagnostics list' })
   end
 
   -- Setup neovim lua configuration

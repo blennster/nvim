@@ -35,6 +35,12 @@ M.configure = function()
     }
   }
 
+  require 'which-key'.register({
+    s = {
+      name = 'search',
+    }
+  }, { prefix = '<leader>' })
+
   -- Enable telescope fzf native, if installed
   pcall(require('telescope').load_extension, 'fzf')
 
