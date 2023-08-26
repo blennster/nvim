@@ -2,24 +2,22 @@ local M = {}
 
 M.lazy = {
   -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
-
+  { 'NMAC427/guess-indent.nvim', opts = {} },
   {
     'mhartington/formatter.nvim',
     config = function()
       require("formatter").setup {
         filetype = {
-          yaml = {
-            require('formatter.filetypes.yaml').yamlfmt
-          }
+          yaml = { require('formatter.filetypes.yaml').yamlfmt },
+          rust = { require('formatter.filetypes.rust').rustfmt },
         }
       }
     end
   },
 
-  { 'echasnovski/mini.pairs', version = '*', opts = {} },
+  { 'echasnovski/mini.pairs',    version = '*', opts = {} },
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',  opts = {} },
+  { 'numToStr/Comment.nvim',     opts = {} },
 }
 
 M.configure = function()
