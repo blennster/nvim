@@ -62,6 +62,15 @@ local function conf()
 				},
 			},
 		},
+		rainbow = {
+			enable = true,
+			-- list of languages you want to disable the plugin for
+			disable = { 'jsx', 'tsx', 'html' },
+			-- Which query to use for finding delimiters
+			query = 'rainbow-parens',
+			-- Highlight the entire buffer all at once
+			strategy = require('ts-rainbow').strategy.global,
+		}
 	}
 end
 
@@ -70,6 +79,7 @@ return {
 	'nvim-treesitter/nvim-treesitter',
 	dependencies = {
 		'nvim-treesitter/nvim-treesitter-textobjects',
+		'HiPhish/nvim-ts-rainbow2',
 	},
 	build = ':TSUpdate',
 	config = conf
