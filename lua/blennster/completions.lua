@@ -12,7 +12,7 @@ M.lazy = {
       'folke/neodev.nvim',
     },
   },
-
+  { 'b0o/schemastore.nvim' },
   -- {
   --   "jose-elias-alvarez/null-ls.nvim",
   --   event = { "BufReadPre", "BufNewFile" },
@@ -195,7 +195,12 @@ M.configure = function()
     gopls = {},
     -- pyright = {},
     rust_analyzer = {},
-    yamlls = {},
+    yamlls = {
+      yaml = {
+        schemaStore = { enable = false, url = '' },
+        schemas = require('schemastore').yaml.schemas(),
+      }
+    },
     nil_ls = {
       ['nil'] = {
         formatting = {
@@ -211,16 +216,31 @@ M.configure = function()
         telemetry = { enable = false },
       },
     },
-    jdtls = {},
+    jdtls = {
+      cmd = { "jdt-language-server",
+        "-configuration", vim.fn.expand("~/.jdtls/config"),
+        "-data", vim.fn.expand("~/.jdtls/workspace")
+      },
+    },
+    jsonls = {
+      json = {
+        schemas = require('schemastore').json.schemas(),
+        validate = true,
+      },
+      cmd = { "vscode-json-languageserver", "--stdio" }
+    },
   }
 
-  -- configure servers
-  require('lspconfig').util.default_config = vim.tbl_extend('force', require('lspconfig').util.default_config, {
-    capabilities = vim.lsp.protocol.make_client_capabilities()
+  local lspconfig = require('lspconfig')
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+  lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
+    capabilities = capabilities,
   })
 
+  -- configure servers
   for server, conf in pairs(servers) do
-    local lspconfig = require('lspconfig')
     local opts = { on_attach = on_attach, settings = conf, cmd = nil }
     if conf.cmd then opts.cmd = conf.cmd end
     lspconfig[server].setup(opts)
