@@ -7,7 +7,7 @@ M.lazy = {
     dependencies = {
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim', event = 'LspAttach', tag = 'legacy', opts = {} },
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
@@ -221,6 +221,11 @@ M.configure = function()
         "-configuration", vim.fn.expand("~/.jdtls/config"),
         "-data", vim.fn.expand("~/.jdtls/workspace")
       },
+      init_options = {
+        extendedClientCapabilities = {
+          progressReportProvider = true,
+        },
+      },
     },
     jsonls = {
       json = {
@@ -241,8 +246,10 @@ M.configure = function()
 
   -- configure servers
   for server, conf in pairs(servers) do
-    local opts = { on_attach = on_attach, settings = conf, cmd = nil }
+    local opts = { on_attach = on_attach, settings = conf, cmd = nil, init_options = nil, handlers = nil }
     if conf.cmd then opts.cmd = conf.cmd end
+    if conf.init_options then opts.init_options = conf.init_options end
+    if conf.handlers then opts.handlers = conf.handlers end
     lspconfig[server].setup(opts)
   end
 end
