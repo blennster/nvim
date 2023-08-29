@@ -17,11 +17,7 @@ M.lazy = {
       },
       -- you can enable a preset for easier configuration
       presets = {
-        bottom_search = false,        -- use a classic bottom cmdline for search
-        command_palette = false,      -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = true,            -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false,       -- add a border to hover docs and signature help
+        inc_rename = true, -- enables an input dialog for inc-rename.nvim
       },
     },
     dependencies = {
@@ -114,10 +110,11 @@ M.lazy = {
       options = { try_as_border = true }
     }
   },
-  { "folke/flash.nvim",     opts = {} },
+  { "folke/flash.nvim",        opts = {} },
   { 'RRethy/vim-illuminate' },
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',    opts = {} },
+  { 'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons', opts = {} },
 }
 
 
