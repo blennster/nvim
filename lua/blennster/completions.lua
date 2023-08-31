@@ -234,6 +234,7 @@ M.configure = function()
       },
       cmd = { "vscode-json-languageserver", "--stdio" }
     },
+    tsserver = {},
   }
 
   local lspconfig = require('lspconfig')
