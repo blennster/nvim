@@ -17,7 +17,6 @@ M.lazy = {
       },
       -- you can enable a preset for easier configuration
       presets = {
-        inc_rename = true, -- enables an input dialog for inc-rename.nvim
       },
     },
     dependencies = {
@@ -27,7 +26,7 @@ M.lazy = {
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
       "rcarriga/nvim-notify",
-      { "smjonas/inc-rename.nvim", opts = {} },
+      { "stevearc/dressing.nvim", opts = {} },
     },
   },
   {
@@ -110,11 +109,16 @@ M.lazy = {
       options = { try_as_border = true }
     }
   },
-  { "folke/flash.nvim",        opts = {} },
+  { "folke/flash.nvim",     opts = {} },
   { 'RRethy/vim-illuminate' },
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',    opts = {} },
-  { 'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons', opts = {} },
+  { 'folke/which-key.nvim', opts = {} },
+  {
+    'akinsho/bufferline.nvim',
+    version = "*",
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    opts = {}
+  },
 }
 
 

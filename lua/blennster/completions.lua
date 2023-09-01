@@ -140,7 +140,7 @@ M.configure = function()
       require('nvim-navic').attach(client, bufnr)
     end
 
-    nmap('<leader>cr', ":IncRename ", '[R]ename')
+    nmap('<leader>cr', vim.lsp.buf.rename, '[R]ename')
     nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
     nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
