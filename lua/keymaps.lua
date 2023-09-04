@@ -53,3 +53,5 @@ else
 end
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Delete buffer" })
+
+map("n", "<leader>h", "<cmd>noh<cr>", { desc = "Clear highlights" })
