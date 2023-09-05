@@ -18,6 +18,7 @@ M.lazy = {
   { 'echasnovski/mini.pairs',    version = '*', opts = {} },
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim',     opts = {} },
+  { 'mbbill/undotree' },
 }
 
 M.configure = function()
@@ -53,6 +54,12 @@ M.configure = function()
       vim.cmd [[Format]]
     end,
   })
+
+
+  vim.keymap.set("n", "<leader>u", function()
+    vim.cmd [[UndotreeToggle]]
+    vim.cmd [[UndotreeFocus]]
+  end, { desc = "[u]ndotree" })
 end
 
 return M

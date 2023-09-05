@@ -12,22 +12,6 @@ M.lazy = {
       'folke/neodev.nvim',
     },
   },
-  { 'b0o/schemastore.nvim' },
-  -- {
-  --   "jose-elias-alvarez/null-ls.nvim",
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   opts = function()
-  --     local nls = require("null-ls")
-  --     return {
-  --       root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
-  --       sources = {
-  --         nls.builtins.formatting.yamlfmt,
-  --         -- nls.builtins.diagnostics.flake8,
-  --       },
-  --     }
-  --   end,
-  -- },
-
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -35,6 +19,8 @@ M.lazy = {
       -- Snippet Engine & its associated nvim-cmp source
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
+
+      'b0o/schemastore.nvim',
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
@@ -109,25 +95,12 @@ M.lazy = {
       end, { expr = true })
     end,
   },
-  -- {
-  --   'huggingface/llm.nvim',
-  --   opts = {
-  --     api_token = '',
-  --     accept_keymap = '<C-g>',
-  --   }
-  -- },
 }
 
 M.configure = function()
   -- [[ Configure LSP ]]
   --  This function gets run when an LSP connects to a particular buffer.
   local on_attach = function(client, bufnr)
-    -- NOTE: Remember that lua is a real programming language, and as such it is possible
-    -- to define small helper and utility functions so you don't have to repeat yourself
-    -- many times.
-    --
-    -- In this case, we create a function that lets us more easily define mappings specific
-    -- for LSP related items. It sets the mode, buffer and description for us each time.
     local nmap = function(keys, func, desc)
       if desc then
         desc = 'LSP: ' .. desc
@@ -173,9 +146,7 @@ M.configure = function()
     end
 
     require 'which-key'.register({
-      c = {
-        name = 'code',
-      }
+      c = { name = 'code', }
     }, { prefix = '<leader>' })
 
     -- Diagnostic keymaps
