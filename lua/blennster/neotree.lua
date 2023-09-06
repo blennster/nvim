@@ -9,16 +9,16 @@ return {
   },
   keys = {
     {
-      "<leader>e",
+      "<leader>E",
       function()
         require("neo-tree.command").execute({ toggle = true, dir = require("util").get_root() })
       end,
       desc = "Explorer NeoTree (root dir)",
     },
     {
-      "<leader>E",
+      "<leader>e",
       function()
-        require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+        require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand('%:p:h') })
       end,
       desc = "Explorer NeoTree (cwd)",
     },
