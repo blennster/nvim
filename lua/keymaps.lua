@@ -45,6 +45,8 @@ if has("bufferline.nvim") then
   map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
   map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
   map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+  map("n", "<leader>b,", "<cmd>BufferLineMovePrev<cr>", { desc = "Move left" })
+  map("n", "<leader>b.", "<cmd>BufferLineMoveNext<cr>", { desc = "Move right" })
 else
   map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
   map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
