@@ -3,18 +3,6 @@ local M = {}
 M.lazy = {
   -- Detect tabstop and shiftwidth automatically
   { 'NMAC427/guess-indent.nvim', opts = {} },
-  {
-    'mhartington/formatter.nvim',
-    config = function()
-      require("formatter").setup {
-        filetype = {
-          yaml = { require('formatter.filetypes.yaml').yamlfmt },
-          rust = { require('formatter.filetypes.rust').rustfmt },
-        }
-      }
-    end
-  },
-
   { 'echasnovski/mini.pairs',    version = '*', opts = {} },
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim',     opts = {} },
@@ -51,7 +39,7 @@ M.configure = function()
 
       -- Lsp config will setup formatting via :Format command and
       -- formatter.nvim will also format via :Format
-      vim.cmd [[Format]]
+      vim.lsp.buf.format()
     end,
   })
 

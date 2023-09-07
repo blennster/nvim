@@ -7,7 +7,8 @@ M.lazy = {
     dependencies = {
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', event = 'LspAttach', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim',               event = 'LspAttach', tag = 'legacy',    opts = {} },
+      { 'creativenull/efmls-configs-nvim', event = 'LspAttach', version = 'v1.x.x' },
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
@@ -128,7 +129,7 @@ M.configure = function()
 
     -- See `:help K` for why this keymap
     nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-    nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+    nmap('<C-K>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
     -- Lesser used LSP functionality
     nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -162,30 +163,51 @@ M.configure = function()
 
   -- Enable the following language servers
   local servers = {
+    efm = {
+      init_options = { documentFormatting = true },
+      settings = {
+        rootMarkers = { ".git/" },
+        languages = {
+          python = {
+            require('efmls-configs.linters.flake8'),
+            require('efmls-configs.formatters.autopep8'),
+          },
+          rust = { require('efmls-configs.formatters.rustfmt') },
+          go = { require('efmls-configs.formatters.gofmt') },
+        }
+      },
+      filetypes = { 'rust', 'python', 'go' }
+    },
     clangd = {},
     gopls = {},
-    -- pyright = {},
+    pyright = {},
     rust_analyzer = {},
     yamlls = {
-      yaml = {
-        schemaStore = { enable = false, url = '' },
-        schemas = require('schemastore').yaml.schemas(),
+      settings = {
+        yaml = {
+          schemaStore = { enable = false, url = '' },
+          schemas = require('schemastore').yaml.schemas(),
+        }
       }
     },
     nil_ls = {
-      ['nil'] = {
-        formatting = {
-          command = { "alejandra" }
+      settings = {
+        ['nil'] = {
+          formatting = {
+            command = { "alejandra" }
+          }
         }
       }
     },
     -- tsserver = {},
     -- html = { filetypes = { 'html', 'twig', 'hbs'} },
     lua_ls = {
-      Lua = {
-        workspace = { checkThirdParty = false },
-        telemetry = { enable = false },
-      },
+      settings = {
+        Lua = {
+          workspace = { checkThirdParty = false },
+          telemetry = { enable = false },
+        },
+      }
     },
     jdtls = {
       cmd = { "jdt-language-server",
@@ -199,9 +221,11 @@ M.configure = function()
       },
     },
     jsonls = {
-      json = {
-        schemas = require('schemastore').json.schemas(),
-        validate = true,
+      settings = {
+        json = {
+          schemas = require('schemastore').json.schemas(),
+          validate = true,
+        },
       },
       cmd = { "vscode-json-languageserver", "--stdio" }
     },
@@ -218,11 +242,8 @@ M.configure = function()
 
   -- configure servers
   for server, conf in pairs(servers) do
-    local opts = { on_attach = on_attach, settings = conf, cmd = nil, init_options = nil, handlers = nil }
-    if conf.cmd then opts.cmd = conf.cmd end
-    if conf.init_options then opts.init_options = conf.init_options end
-    if conf.handlers then opts.handlers = conf.handlers end
-    lspconfig[server].setup(opts)
+    conf.on_attach = on_attach
+    lspconfig[server].setup(conf)
   end
 end
 
