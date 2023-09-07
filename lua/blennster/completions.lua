@@ -174,6 +174,13 @@ M.configure = function()
           },
           rust = { require('efmls-configs.formatters.rustfmt') },
           go = { require('efmls-configs.formatters.gofmt') },
+          bash = {
+            require('efmls-configs.formatters.shfmt'),
+            require('efmls-configs.linters.shellcheck')
+          },
+          yaml = {
+            { formatCommand = "yamlfmt -formatter retain_line_breaks=true,indentless_arrays=false", formatStdin = true }
+          },
         }
       },
       filetypes = { 'rust', 'python', 'go' }
@@ -229,6 +236,7 @@ M.configure = function()
       },
       cmd = { "vscode-json-languageserver", "--stdio" }
     },
+    bashls = {},
     tsserver = {},
   }
 

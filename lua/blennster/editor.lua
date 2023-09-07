@@ -38,8 +38,7 @@ M.configure = function()
       end
 
       -- Lsp config will setup formatting via :Format command and
-      -- formatter.nvim will also format via :Format
-      vim.lsp.buf.format()
+      vim.cmd [[Format]]
     end,
   })
 
