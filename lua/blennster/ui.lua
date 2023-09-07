@@ -115,6 +115,7 @@ M.lazy = {
   { 'folke/which-key.nvim', opts = {} },
   {
     'akinsho/bufferline.nvim',
+    enabled = false,
     version = "*",
     dependencies = 'nvim-tree/nvim-web-devicons',
     opts = {}

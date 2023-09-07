@@ -54,7 +54,14 @@ else
   map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 end
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+map("n", "<Tab>", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Delete buffer" })
+
+if has("buffer_manager.nvim") then
+  map("n", "<leader><space>", require("buffer_manager.ui").toggle_quick_menu, { desc = "Open buffen manager" })
+else
+  map("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "Search buffers" })
+end
 
 map("n", "<leader>h", "<cmd>noh<cr>", { desc = "Clear highlights" })
 map("n", "<C-q>", vim.cmd.cope, { desc = "Open quickfix" })
