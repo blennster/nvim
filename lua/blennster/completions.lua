@@ -174,7 +174,7 @@ M.configure = function()
           },
           rust = { require('efmls-configs.formatters.rustfmt') },
           go = { require('efmls-configs.formatters.gofmt') },
-          bash = {
+          sh = {
             require('efmls-configs.formatters.shfmt'),
             require('efmls-configs.linters.shellcheck')
           },
@@ -183,7 +183,7 @@ M.configure = function()
           },
         }
       },
-      filetypes = { 'rust', 'python', 'go' }
+      filetypes = { 'rust', 'python', 'go', 'yaml', 'sh' }
     },
     clangd = {},
     gopls = {},
