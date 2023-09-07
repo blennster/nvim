@@ -21,8 +21,8 @@ M.lazy = {
           { buffer = bufnr, desc = '[g]it go to [p]revious Hunk' })
         vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk,
           { buffer = bufnr, desc = '[g]it go to [n]ext Hunk' })
-        vim.keymap.set('n', '<leader>ph', require('gitsigns').preview_hunk,
-          { buffer = bufnr, desc = '[p]review [h]unk' })
+        vim.keymap.set('n', '<leader>gh', require('gitsigns').preview_hunk,
+          { buffer = bufnr, desc = '[g]it preview [h]unk' })
       end,
     },
   },
