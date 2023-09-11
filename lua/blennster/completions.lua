@@ -180,7 +180,10 @@ M.configure = function()
             require('efmls-configs.linters.shellcheck')
           },
           yaml = {
-            { formatCommand = "yamlfmt -formatter retain_line_breaks=true,indentless_arrays=false", formatStdin = true }
+            {
+              formatCommand = "yamlfmt -formatter retain_line_breaks=true,indentless_arrays=false -in",
+              formatStdin = true
+            }
           },
         }
       },
