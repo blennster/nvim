@@ -3,7 +3,7 @@
 local function conf()
 	require('nvim-treesitter.configs').setup {
 		-- Add languages to be installed here that you want installed for treesitter
-		ensure_installed = { 'lua', 'vimdoc', 'vim', 'bash', 'markdown', 'markdown_inline', 'regex', 'yaml' },
+		ensure_installed = { 'c', 'lua', 'vimdoc', 'vim', 'bash', 'markdown', 'markdown_inline', 'regex', 'yaml' },
 
 		auto_install = true,
 
@@ -62,15 +62,6 @@ local function conf()
 				},
 			},
 		},
-		rainbow = {
-			enable = true,
-			-- list of languages you want to disable the plugin for
-			disable = { 'jsx', 'tsx', 'html' },
-			-- Which query to use for finding delimiters
-			query = 'rainbow-parens',
-			-- Highlight the entire buffer all at once
-			strategy = require('ts-rainbow').strategy.global,
-		}
 	}
 end
 
@@ -79,7 +70,7 @@ return {
 	'nvim-treesitter/nvim-treesitter',
 	dependencies = {
 		'nvim-treesitter/nvim-treesitter-textobjects',
-		'HiPhish/nvim-ts-rainbow2',
+		'HiPhish/rainbow-delimiters.nvim'
 	},
 	build = ':TSUpdate',
 	config = conf
