@@ -58,7 +58,7 @@ M.lazy = {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           },
-          ['<Tab>'] = cmp.mapping(function(fallback)
+          ['<C-Space>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
             elseif luasnip.expand_or_locally_jumpable() then
@@ -162,6 +162,8 @@ M.configure = function()
   -- Setup neovim lua configuration
   require('neodev').setup()
 
+  local efm_eslint = { require('efmls-configs.linters.eslint') }
+
   -- Enable the following language servers
   local servers = {
     efm = {
@@ -185,9 +187,17 @@ M.configure = function()
               formatStdin = true
             }
           },
+          typescript = efm_eslint,
+          javascript = efm_eslint,
+          typescriptreact = efm_eslint,
+          javascriptreact = efm_eslint,
         }
       },
-      filetypes = { 'rust', 'python', 'go', 'yaml', 'sh' }
+      filetypes = {
+        'rust', 'go',
+        'yaml', 'sh',
+        'typescriptreact', 'typescript', 'javascriptreact', 'javascript', 'python'
+      },
     },
     clangd = {},
     gopls = {},
