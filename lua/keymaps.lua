@@ -65,3 +65,9 @@ end
 
 map("n", "<leader>h", "<cmd>noh<cr>", { desc = "Clear highlights" })
 map("n", "<C-q>", vim.cmd.cope, { desc = "Open quickfix" })
+
+if has("noice.nvim") then
+  map("n", "<leader>nd", "<cmd>Noice dismiss<cr>", { desc = "Noice dismiss" })
+  map("n", "<leader>ne", "<cmd>Noice errors<cr>", { desc = "Noice errors" })
+  map("n", "<leader>nn", "<cmd>Noice<cr>", { desc = "Noice" })
+end
