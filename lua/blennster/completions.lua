@@ -178,7 +178,10 @@ M.configure = function()
           rust = { require('efmls-configs.formatters.rustfmt') },
           go = { require('efmls-configs.formatters.gofmt') },
           sh = {
-            require('efmls-configs.formatters.shfmt'),
+            {
+              formatCommand = "shfmt -i 2 -sr -ci -",
+              formatStdin = true
+            },
             require('efmls-configs.linters.shellcheck')
           },
           yaml = {
