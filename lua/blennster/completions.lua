@@ -41,7 +41,7 @@ M.lazy = {
       luasnip.config.setup {}
       return {
         completion = {
-          completeopt = "menu,menuone,noinsert",
+          completeopt = "menu,menuone,preview,noinsert",
         },
         snippet = {
           expand = function(args)
