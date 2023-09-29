@@ -161,45 +161,45 @@ M.configure = function()
   -- Setup neovim lua configuration
   require('neodev').setup()
 
-  local efm_eslint = { require('efmls-configs.linters.eslint') }
+  local efmEslint = require('efmls-configs.linters.eslint')
+  local efmPrettier = require('efmls-configs.formatters.prettier')
+  local efmLanguages = {
+    python = {
+      require('efmls-configs.linters.flake8'),
+      require('efmls-configs.formatters.autopep8'),
+    },
+    rust = { require('efmls-configs.formatters.rustfmt') },
+    go = { require('efmls-configs.formatters.gofmt') },
+    sh = {
+      {
+        formatCommand = "shfmt -i 2 -sr -ci -",
+        formatStdin = true
+      },
+      require('efmls-configs.linters.shellcheck')
+    },
+    yaml = {
+      {
+        formatCommand = "yamlfmt -formatter retain_line_breaks=true,indentless_arrays=false -in",
+        formatStdin = true
+      }
+    },
+    typescript = { efmEslint },
+    javascript = { efmEslint },
+    typescriptreact = { efmEslint },
+    javascriptreact = { efmEslint },
+    json = { efmPrettier }
+  }
 
   -- Enable the following language servers
   local servers = {
+    -- https://github.com/creativenull/efmls-configs-nvim
     efm = {
       init_options = { documentFormatting = true },
       settings = {
         rootMarkers = { ".git/" },
-        languages = {
-          python = {
-            require('efmls-configs.linters.flake8'),
-            require('efmls-configs.formatters.autopep8'),
-          },
-          rust = { require('efmls-configs.formatters.rustfmt') },
-          go = { require('efmls-configs.formatters.gofmt') },
-          sh = {
-            {
-              formatCommand = "shfmt -i 2 -sr -ci -",
-              formatStdin = true
-            },
-            require('efmls-configs.linters.shellcheck')
-          },
-          yaml = {
-            {
-              formatCommand = "yamlfmt -formatter retain_line_breaks=true,indentless_arrays=false -in",
-              formatStdin = true
-            }
-          },
-          typescript = efm_eslint,
-          javascript = efm_eslint,
-          typescriptreact = efm_eslint,
-          javascriptreact = efm_eslint,
-        }
+        languages = efmLanguages
       },
-      filetypes = {
-        'rust', 'go',
-        'yaml', 'sh',
-        'typescriptreact', 'typescript', 'javascriptreact', 'javascript', 'python'
-      },
+      filetypes = vim.tbl_keys(efmLanguages)
     },
     clangd = {},
     gopls = {},
