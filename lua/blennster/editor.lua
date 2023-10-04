@@ -24,6 +24,7 @@ M.lazy = {
       focus_alternate_buffer = true,
     }
   },
+  "lambdalisue/suda.vim"
 }
 
 M.configure = function()
