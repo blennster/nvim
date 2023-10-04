@@ -24,7 +24,8 @@ M.lazy = {
       focus_alternate_buffer = true,
     }
   },
-  "lambdalisue/suda.vim"
+  "lambdalisue/suda.vim",
+  "terrastruct/d2-vim"
 }
 
 M.configure = function()

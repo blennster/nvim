@@ -9,6 +9,9 @@ a guide. One possible example:
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.cmd [[filetype plugin on]]
+vim.cmd [[syntax on]]
+
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
