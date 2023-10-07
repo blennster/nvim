@@ -187,7 +187,8 @@ M.configure = function()
     javascript = { efmEslint },
     typescriptreact = { efmEslint },
     javascriptreact = { efmEslint },
-    json = { efmPrettier }
+    json = { efmPrettier },
+    markdown = { efmPrettier }
   }
 
   -- Enable the following language servers
