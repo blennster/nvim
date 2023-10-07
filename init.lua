@@ -9,8 +9,7 @@ a guide. One possible example:
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.cmd [[filetype plugin on]]
-vim.cmd [[syntax on]]
+require 'blennster.settings'
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -62,7 +61,6 @@ require('lazy').setup({
   require 'blennster.treesitter',
 }, {})
 
-require 'blennster.settings'
 require 'blennster.completions'.configure()
 require 'blennster.telescope'.configure()
 require 'blennster.editor'.configure()

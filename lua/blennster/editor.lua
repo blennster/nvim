@@ -2,10 +2,10 @@ local M = {}
 
 M.lazy = {
   -- Detect tabstop and shiftwidth automatically
-  { 'NMAC427/guess-indent.nvim', opts = {} },
-  { 'echasnovski/mini.pairs',    version = '*', opts = {} },
+  { 'Darazaki/indent-o-matic' },
+  { 'echasnovski/mini.pairs', version = '*', opts = {} },
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',     opts = {} },
+  { 'numToStr/Comment.nvim',  opts = {} },
   { 'mbbill/undotree' },
   {
     "j-morano/buffer_manager.nvim",
@@ -29,6 +29,8 @@ M.lazy = {
 }
 
 M.configure = function()
+  require('indent-o-matic').setup {}
+
   -- [[ Highlight on yank ]]
   -- See `:help vim.highlight.on_yank()`
   local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
