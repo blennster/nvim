@@ -18,11 +18,15 @@ M.lazy = {
       },
       on_attach = function(bufnr)
         vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk,
-          { buffer = bufnr, desc = '[g]it go to [p]revious Hunk' })
+          { buffer = bufnr, desc = '[g]it goto [p]revious Hunk' })
         vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk,
-          { buffer = bufnr, desc = '[g]it go to [n]ext Hunk' })
+          { buffer = bufnr, desc = '[g]it goto [n]ext Hunk' })
         vim.keymap.set('n', '<leader>gh', require('gitsigns').preview_hunk,
           { buffer = bufnr, desc = '[g]it preview [h]unk' })
+        vim.keymap.set('n', '<leader>gb', require('gitsigns').blame_line,
+          { buffer = bufnr, desc = '[g]it [b]lame' })
+        vim.keymap.set('n', '<leader>gd', require('gitsigns').diffthis,
+          { buffer = bufnr, desc = '[g]it [d]iff' })
       end,
     },
   },
