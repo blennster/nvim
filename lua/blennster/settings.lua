@@ -37,6 +37,7 @@ vim.o.ts = 4
 vim.o.smartindent = true
 vim.o.autoindent = true
 vim.o.expandtab = true
+vim.o.cursorline = true
 
 vim.cmd [[filetype plugin on]]
 vim.cmd [[syntax on]]

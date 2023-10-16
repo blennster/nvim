@@ -2,6 +2,7 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("blennstervim_" .. name, { clear = true })
 end
 
+-- move cursor to last location for file
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = augroup("last_loc"),
   callback = function()

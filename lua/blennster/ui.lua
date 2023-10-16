@@ -4,6 +4,7 @@ local icons = require 'common'.icons
 
 M.lazy = {
   {
+    enabled = false,
     "folke/noice.nvim",
     event = "VeryLazy",
     opts = {
@@ -41,6 +42,7 @@ M.lazy = {
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
+    enabled = false,
     dependencies = {
       'SmiteshP/nvim-navic',
       'nvim-tree/nvim-web-devicons'

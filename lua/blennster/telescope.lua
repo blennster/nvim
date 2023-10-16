@@ -79,8 +79,8 @@ M.configure = function()
     })
   end, { desc = '[s]earch [T]ext in current buffer' })
 
-  require("telescope").load_extension("noice")
-  vim.keymap.set('n', '<leader>sn', ":Telescope noice<cr>", { desc = '[s]earch [n]oice' })
+  -- require("telescope").load_extension("noice")
+  -- vim.keymap.set('n', '<leader>sn', ":Telescope noice<cr>", { desc = '[s]earch [n]oice' })
 end
 
 return M
