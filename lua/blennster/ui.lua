@@ -101,7 +101,6 @@ M.lazy = {
       options = { try_as_border = true }
     }
   },
-  { "folke/flash.nvim",     opts = {} },
   { 'RRethy/vim-illuminate' },
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },

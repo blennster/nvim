@@ -4,6 +4,7 @@ M.lazy = {
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
+    event = 'InsertEnter',
     dependencies = {
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -16,6 +17,7 @@ M.lazy = {
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
       'L3MON4D3/LuaSnip',
