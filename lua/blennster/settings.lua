@@ -39,5 +39,6 @@ vim.o.autoindent = true
 vim.o.expandtab = true
 vim.o.cursorline = true
 
+vim.cmd [[set nocp]]
 vim.cmd [[filetype plugin on]]
 vim.cmd [[syntax on]]

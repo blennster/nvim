@@ -69,15 +69,16 @@ require 'blennster.git'.configure()
 require 'autocmds'
 require 'keymaps'
 
--- Open Telescope on startup if no filename has been supplied
-local ts_group = vim.api.nvim_create_augroup("TelescopeOnEnter", { clear = true })
+-- Open netrw on startup if no filename has been supplied
+local ts_group = vim.api.nvim_create_augroup("DoOnEnter", { clear = true })
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = function()
     if #(vim.v.argv) > 4 then
       return
     end
     vim.cmd(":bd 1")
-    require("telescope.builtin").find_files()
+    -- require("telescope.builtin").find_files()
+    vim.cmd(":Ex .")
   end,
   group = ts_group,
 })
