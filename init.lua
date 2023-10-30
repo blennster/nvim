@@ -70,18 +70,18 @@ require 'autocmds'
 require 'keymaps'
 
 -- Open netrw on startup if no filename has been supplied
-local ts_group = vim.api.nvim_create_augroup("DoOnEnter", { clear = true })
-vim.api.nvim_create_autocmd({ "VimEnter" }, {
-  callback = function()
-    if #(vim.v.argv) > 4 then
-      return
-    end
-    vim.cmd(":bd 1")
-    -- require("telescope.builtin").find_files()
-    vim.cmd(":Ex .")
-  end,
-  group = ts_group,
-})
+-- local ts_group = vim.api.nvim_create_augroup("DoOnEnter", { clear = true })
+-- vim.api.nvim_create_autocmd({ "VimEnter" }, {
+--   callback = function()
+--     if #(vim.v.argv) > 4 then
+--       return
+--     end
+--     vim.cmd(":bd 1")
+--     -- require("telescope.builtin").find_files()
+--     vim.cmd(":Ex .")
+--   end,
+--   group = ts_group,
+-- })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
