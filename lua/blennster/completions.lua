@@ -112,13 +112,20 @@ M.configure = function()
 
       vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
     end
+    local vnmap = function(keys, func, desc)
+      if desc then
+        desc = 'LSP: ' .. desc
+      end
+
+      vim.keymap.set({ 'v', 'n' }, keys, func, { buffer = bufnr, desc = desc })
+    end
 
     if client.server_capabilities.documentSymbolProvider then
       require('nvim-navic').attach(client, bufnr)
     end
 
     nmap('<leader>cr', vim.lsp.buf.rename, '[R]ename')
-    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+    vnmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
     nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
     nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
