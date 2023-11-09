@@ -5,6 +5,9 @@
 -- Set highlight on search
 vim.o.hlsearch = true
 
+-- Completion options
+vim.o.completeopt = 'menuone,longest'
+
 -- Make line numbers default
 vim.wo.number = true
 vim.wo.relativenumber = true
