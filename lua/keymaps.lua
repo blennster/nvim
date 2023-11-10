@@ -40,22 +40,24 @@ map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 -- [[ Netrw ]]
-map("n", "<leader>e", function()
-  local netrw_open = vim.api.nvim_buf_get_option(0, "filetype") == "netrw"
-  if not netrw_open then
-    vim.cmd [[Ex]]
-  elseif vim.api.nvim_buf_get_option(0, "filetype") == "netrw" then
-    vim.cmd [[bd]]
-  end
-end, { desc = "Toggle explorer" })
-map("n", "<leader>E", function()
-  local netrw_open = vim.api.nvim_buf_get_option(0, "filetype") == "netrw"
-  if not netrw_open then
-    vim.cmd [[Ex .]]
-  elseif vim.api.nvim_buf_get_option(0, "filetype") == "netrw" then
-    vim.cmd [[bd]]
-  end
-end, { desc = "Toggle explorer" })
+if not has("neo-tree.nvim") then
+  map("n", "<leader>e", function()
+    local netrw_open = vim.api.nvim_buf_get_option(0, "filetype") == "netrw"
+    if not netrw_open then
+      vim.cmd [[Ex]]
+    elseif vim.api.nvim_buf_get_option(0, "filetype") == "netrw" then
+      vim.cmd [[bd]]
+    end
+  end, { desc = "Toggle explorer" })
+  map("n", "<leader>E", function()
+    local netrw_open = vim.api.nvim_buf_get_option(0, "filetype") == "netrw"
+    if not netrw_open then
+      vim.cmd [[Ex .]]
+    elseif vim.api.nvim_buf_get_option(0, "filetype") == "netrw" then
+      vim.cmd [[bd]]
+    end
+  end, { desc = "Toggle explorer" })
+end
 
 -- buffers
 if has("bufferline.nvim") then
