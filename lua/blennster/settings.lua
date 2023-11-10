@@ -6,7 +6,7 @@
 vim.o.hlsearch = true
 
 -- Completion options
-vim.o.completeopt = 'menuone,longest'
+vim.o.completeopt = 'menu,menuone,longest'
 
 -- Make line numbers default
 vim.wo.number = true

@@ -42,9 +42,6 @@ M.lazy = {
       require('luasnip.loaders.from_vscode').lazy_load()
       luasnip.config.setup {}
       return {
-        completion = {
-          completeopt = "menu,menuone,preview,noinsert",
-        },
         snippet = {
           expand = function(args)
             require("luasnip").lsp_expand(args.body)
@@ -94,6 +91,7 @@ M.lazy = {
   {
     "Exafunction/codeium.vim",
     config = function()
+      vim.g.codeium_no_map_tab = false
       vim.keymap.set("i", "<C-g>", function()
         return vim.fn["codeium#Accept"]()
       end, { expr = true })
