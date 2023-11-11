@@ -36,8 +36,10 @@ return {
   end,
   opts = {
     filesystem = {
+      filtered_items = {
+        hide_dotfiles = false,
+      },
       use_libuv_file_watcher = true,
-      hide_dotfiles = false,
     },
     window = {
       mappings = {
