@@ -11,14 +11,15 @@ return {
     {
       "<leader>E",
       function()
-        require("neo-tree.command").execute({ toggle = true, dir = require("util").get_root() })
+        require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand('%:p:h') })
       end,
       desc = "Explorer NeoTree (root dir)",
     },
     {
       "<leader>e",
       function()
-        require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand('%:p:h') })
+        require("neo-tree.command").execute({ toggle = true, reveal_file = vim.fn.expand('%:p'), dir = require("util")
+        .get_root() })
       end,
       desc = "Explorer NeoTree (cwd)",
     },
