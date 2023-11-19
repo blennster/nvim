@@ -3,6 +3,7 @@ local M = {}
 M.servers = function()
     local efmEslint = require('efmls-configs.linters.eslint')
     local efmPrettier = require('efmls-configs.formatters.prettier')
+    require('efmls-configs.formatters.shfmt')   -- Include so healthcheck can report
     local efmLanguages = {
         python = {
             require('efmls-configs.linters.flake8'),

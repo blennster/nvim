@@ -1,6 +1,7 @@
 local M = {}
 
 M.lazy = {
+  { 'williamboman/mason.nvim', opts = {} },
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -110,12 +111,12 @@ M.configure = function()
 
       vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
     end
-    local vnmap = function(keys, func, desc)
+    local vmap = function(keys, func, desc)
       if desc then
         desc = 'LSP: ' .. desc
       end
 
-      vim.keymap.set({ 'v', 'n' }, keys, func, { buffer = bufnr, desc = desc })
+      vim.keymap.set({ 'v' }, keys, func, { buffer = bufnr, desc = desc })
     end
 
     if client.server_capabilities.documentSymbolProvider then
@@ -123,7 +124,8 @@ M.configure = function()
     end
 
     nmap('<leader>cr', vim.lsp.buf.rename, '[R]ename')
-    vnmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+    vmap('ga', vim.lsp.buf.code_action, 'Code [A]ction')
 
     nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
     nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
