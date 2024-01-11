@@ -1,10 +1,6 @@
-local function augroup(name)
-  return vim.api.nvim_create_augroup("blennstervim_" .. name, { clear = true })
-end
-
 -- move cursor to last location for file
 vim.api.nvim_create_autocmd("BufReadPost", {
-  group = augroup("last_loc"),
+  group = vim.g.augroup,
   callback = function()
     local exclude = { "gitcommit" }
     local buf = vim.api.nvim_get_current_buf()
@@ -17,4 +13,14 @@ vim.api.nvim_create_autocmd("BufReadPost", {
       pcall(vim.api.nvim_win_set_cursor, 0, mark)
     end
   end,
+})
+
+-- [[ Highlight on yank ]]
+-- See `:help vim.highlight.on_yank()`
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = vim.g.augroup,
+  pattern = '*',
 })

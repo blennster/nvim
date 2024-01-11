@@ -8,6 +8,7 @@ a guide. One possible example:
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.g.augroup = vim.api.nvim_create_augroup("blennster", { clear = true })
 
 require 'blennster.settings'
 
@@ -27,61 +28,30 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
 require('lazy').setup({
   {
     "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-    config = function()
+    priority = 1,
+    init = function()
       vim.cmd.colorscheme 'tokyonight'
     end,
   },
 
-  require 'blennster.git'.lazy,
-  require 'blennster.telescope'.lazy,
+  require 'blennster.git',
+  require 'blennster.telescope',
 
-  {
-    "SmiteshP/nvim-navic",
-    lazy = true,
-    opts = function()
-      return {
-        separator = " ",
-        highlight = true,
-        depth_limit = 5,
-      }
-    end,
-  },
-
-  require 'blennster.completions'.lazy,
-  require 'blennster.editor'.lazy,
-  require 'blennster.ui'.lazy,
+  require 'blennster.completions',
+  require 'blennster.editor',
+  require 'blennster.ui',
 
   require 'blennster.neotree',
   require 'blennster.treesitter',
 }, {})
 
-require 'blennster.completions'.configure()
-require 'blennster.telescope'.configure()
-require 'blennster.editor'.configure()
-require 'blennster.git'.configure()
-
-require 'autocmds'
-require 'keymaps'
-
--- Open netrw on startup if no filename has been supplied
--- local ts_group = vim.api.nvim_create_augroup("DoOnEnter", { clear = true })
--- vim.api.nvim_create_autocmd({ "VimEnter" }, {
---   callback = function()
---     if #(vim.v.argv) > 4 then
---       return
---     end
---     vim.cmd(":bd 1")
---     -- require("telescope.builtin").find_files()
---     vim.cmd(":Ex .")
---   end,
---   group = ts_group,
--- })
+require 'blennster.keymaps'
+require 'blennster.autocmds'
+require 'blennster.autoformat'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -29,7 +29,9 @@ M.servers = function()
         typescriptreact = { efmEslint },
         javascriptreact = { efmEslint },
         json = { efmPrettier },
-        markdown = { efmPrettier }
+        markdown = { efmPrettier },
+        html = { efmPrettier },
+        css = { efmPrettier },
     }
 
     -- Enable the following language servers
@@ -95,6 +97,8 @@ M.servers = function()
         },
         bashls = {},
         tsserver = {},
+        zls = {},
+        cssls = {},
     }
 
     return servers

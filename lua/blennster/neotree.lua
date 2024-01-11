@@ -7,6 +7,7 @@ return {
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
   },
+  -- These are lazy keys and cannot be defined in keymaps
   keys = {
     {
       "<leader>E",
@@ -18,15 +19,16 @@ return {
     {
       "<leader>e",
       function()
-        require("neo-tree.command").execute({ toggle = true, reveal_file = vim.fn.expand('%:p'), dir = require("util")
-        .get_root() })
+        require("neo-tree.command").execute({
+          toggle = true,
+          reveal_file = vim.fn.expand('%:p'),
+          dir = require("util")
+              .get_root()
+        })
       end,
       desc = "Explorer NeoTree (cwd)",
     },
   },
-  deactivate = function()
-    vim.cmd([[Neotree close]])
-  end,
   init = function()
     if vim.fn.argc() == 1 then
       local stat = vim.loop.fs_stat(tostring(vim.fn.argv(0)))
