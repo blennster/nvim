@@ -65,9 +65,10 @@ return {
         { src = "bc", short_name = "MATH", precision = 6 },
       }
       vim.g.coq_settings = {
-        auto_start = true,
+        auto_start = 'shut-up',
         ['display.preview.border'] = 'solid',
-        ['clients.lsp.resolve_timeout'] = 2,
+        ['clients.lsp.resolve_timeout'] = 0.15,
+        ['limits.completion_auto_timeout'] = 0.95,
         ['clients.lsp.always_on_top'] = {},
       }
     end
