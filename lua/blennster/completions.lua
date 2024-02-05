@@ -3,7 +3,7 @@ return {
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
-    event = 'InsertEnter',
+    event = { "BufReadPre", "BufNewFile", "InsertEnter" },
     dependencies = {
       -- Useful status updates for LSP
       { 'j-hui/fidget.nvim',               event = 'LspAttach', tag = 'legacy',    opts = {} },
@@ -55,7 +55,7 @@ return {
   {
     'ms-jpq/coq_nvim',
     branch = 'coq',
-    event = 'InsertEnter',
+    event = { "BufReadPre", "BufNewFile", "InsertEnter" },
     dependencies = {
       { 'ms-jpq/coq.artifacts',  branch = 'artifacts' },
       { 'ms-jpq/coq.thirdparty', branch = '3p' },
