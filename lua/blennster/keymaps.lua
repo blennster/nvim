@@ -85,11 +85,40 @@ map("n", "<leader>bp", "<cmd>bprev<cr>", { desc = "Switch to next buffer" })
 map("n", "<Tab>", "<cmd>e #<cr>", { desc = "Switch to other buffer" })
 map("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Delete buffer" })
 
+if has("harpoon") then
+  map("n", "<C-m>", function()
+    require("harpoon"):list():append()
+  end, { desc = "add to harpoon list (mark)" })
+  map("n", "<leader><leader>", function()
+    local harpoon = require("harpoon")
+    harpoon.ui:toggle_quick_menu(harpoon:list())
+  end, { desc = "show harpoon list" })
+  map("n", "<S-h>", function()
+    require("harpoon"):list():prev()
+  end, { desc = "Prev mark" })
+  map("n", "<S-l>", function()
+    require("harpoon"):list():next()
+  end, { desc = "Next mark" })
+  map("n", "<leader>1", function()
+    require("harpoon"):list():select(1)
+  end, { desc = "goto first mark" })
+  map("n", "<leader>2", function()
+    require("harpoon"):list():select(2)
+  end, { desc = "goto second mark" })
+  map("n", "<leader>3", function()
+    require("harpoon"):list():select(3)
+  end, { desc = "goto third mark" })
+  map("n", "<leader>4", function()
+    require("harpoon"):list():select(4)
+  end, { desc = "goto fourth mark" })
+end
+
 if has("buffer_manager.nvim") then
   map("n", "<leader><space>", require("buffer_manager.ui").toggle_quick_menu, { desc = "Open buffer manager" })
-else
+elseif false then
   map("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "Search buffers" })
 end
+
 
 map("n", "<leader>h", "<cmd>noh<cr>", { desc = "Clear highlights" })
 map("n", "<C-q>", function()
