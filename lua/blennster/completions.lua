@@ -141,6 +141,5 @@ return {
         return vim.fn["codeium#Accept"]()
       end, { expr = true })
     end,
-    enabled = false
   },
 }
