@@ -53,23 +53,79 @@ return {
     end,
   },
   {
-    'ms-jpq/coq_nvim',
-    branch = 'coq',
+    -- Autocompletion
+    'hrsh7th/nvim-cmp',
     event = { "BufReadPre", "BufNewFile", "InsertEnter" },
     dependencies = {
-      { 'ms-jpq/coq.artifacts',  branch = 'artifacts' },
-      { 'ms-jpq/coq.thirdparty', branch = '3p' },
+      -- Snippet Engine & its associated nvim-cmp source
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+      -- Adds a number of user-friendly snippets
+      'rafamadriz/friendly-snippets',
+
+      -- Adds LSP completion capabilities
+      'hrsh7th/cmp-nvim-lsp',
+
+      -- Add other completions
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-buffer',
     },
-    init = function()
-      require('coq_3p') {
-        { src = "bc", short_name = "MATH", precision = 6 },
-      }
-      vim.g.coq_settings = {
-        auto_start = 'shut-up',
-        ['display.preview.border'] = 'solid',
-        ['clients.lsp.resolve_timeout'] = 0.15,
-        ['limits.completion_auto_timeout'] = 0.95,
-        ['clients.lsp.always_on_top'] = {},
+    opts = function()
+      local cmp = require("cmp")
+      local defaults = require("cmp.config.default")()
+      local luasnip = require 'luasnip'
+      require('luasnip.loaders.from_vscode').lazy_load()
+      luasnip.config.setup {}
+      return {
+        snippet = {
+          expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+          end,
+        },
+        mapping = {
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          -- ['<C-Space>'] = cmp.mapping.complete {},
+          ['<CR>'] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+          },
+          ['<C-h>'] = cmp.mapping(function(_)
+            luasnip.jump(1)
+          end, { 'i', 's' }),
+          ['<C-H>'] = cmp.mapping(function(_)
+            luasnip.jump(-1)
+          end, { 'i', 's' }),
+          ['<C-Space>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.expand_or_locally_jumpable() then
+              luasnip.expand_or_jump()
+            elseif not cmp.visible() then
+              cmp.complete()
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.locally_jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+        },
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "buffer" },
+          { name = "path" },
+        }),
+        sorting = defaults.sorting,
       }
     end
   },
@@ -81,5 +137,6 @@ return {
         return vim.fn["codeium#Accept"]()
       end, { expr = true })
     end,
+    enabled = false
   },
 }
