@@ -82,21 +82,34 @@ return {
             require("luasnip").lsp_expand(args.body)
           end,
         },
+        experimental = {
+          ghost_text = true
+        },
         mapping = {
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<Down>'] = cmp.mapping.select_next_item(),
+          ['<Up>'] = cmp.mapping.select_prev_item(),
           ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-u>'] = cmp.mapping.scroll_docs(4),
           -- ['<C-Space>'] = cmp.mapping.complete {},
           ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           },
-          ['<C-h>'] = cmp.mapping(function(_)
-            luasnip.jump(1)
+          ['<C-l>'] = cmp.mapping(function(fallback)
+            if luasnip.expand_or_locally_jumpable() then
+              luasnip.jump(1)
+            else
+              fallback()
+            end
           end, { 'i', 's' }),
-          ['<C-H>'] = cmp.mapping(function(_)
-            luasnip.jump(-1)
+          ['<C-h>'] = cmp.mapping(function(fallback)
+            if luasnip.expand_or_locally_jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
           end, { 'i', 's' }),
           ['<C-Space>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
@@ -105,15 +118,6 @@ return {
               luasnip.expand_or_jump()
             elseif not cmp.visible() then
               cmp.complete()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
             else
               fallback()
             end
