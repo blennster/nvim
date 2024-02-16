@@ -82,9 +82,6 @@ return {
             require("luasnip").lsp_expand(args.body)
           end,
         },
-        experimental = {
-          ghost_text = true
-        },
         mapping = {
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<C-p>'] = cmp.mapping.select_prev_item(),
