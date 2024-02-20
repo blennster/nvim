@@ -43,6 +43,15 @@ return {
           -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
           find_command = { "rg", "--files", "--hidden", "--glob", "!.git" }
         },
+        lsp_references = {
+          include_current_line = false,
+          include_declaration = false,
+          theme = 'cursor'
+        },
+        current_buffer_fuzzy_find = {
+          theme = 'dropdown',
+          previewer = false,
+        }
       }
     }
 

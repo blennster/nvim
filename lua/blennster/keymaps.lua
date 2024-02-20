@@ -158,12 +158,7 @@ vim.api.nvim_create_user_command('TelescopeBind',
     map('n', '<leader>sg', builtin.git_files, { desc = '[s]earch [g]it Files' })
     map('n', '<leader>sd', builtin.diagnostics, { desc = '[s]earch [d]iagnostics' })
     map('n', '<leader>sk', builtin.keymaps, { desc = '[s]earch [k]eymaps' })
-    map('n', '<leader>sT', function()
-      -- You can pass additional configuration to telescope to change theme, layout, etc.
-      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        previewer = true,
-      })
-    end, { desc = '[s]earch [T]ext in current buffer' })
+    map('n', '<leader>sT', builtin.current_buffer_fuzzy_find, { desc = '[s]earch [T]ext in current buffer' })
   end, {})
 
 
@@ -180,6 +175,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = desc })
     end
+
 
     lspmap('n', '<leader>cr', vim.lsp.buf.rename, '[R]ename')
     lspmap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
