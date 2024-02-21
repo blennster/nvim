@@ -101,6 +101,24 @@ M.servers = function()
         cssls = {},
     }
 
+    if vim.fn.filereadable(vim.fn.expand('./tools/gopackagesdriver.sh')) == 1 then
+        servers.gopls = {
+            settings = {
+                gopls = {
+                    env = {
+                        GOPACKAGESDRIVER = './tools/gopackagesdriver.sh'
+                    },
+                    directoryFilters = {
+                        "-bazel-bin",
+                        "-bazel-out",
+                        "-bazel-testlogs",
+                        "-bazel-mypkg",
+                    },
+                },
+            }
+        }
+    end
+
     return servers
 end
 
