@@ -82,7 +82,6 @@ end
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to other buffer" })
 map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Switch to next buffer" })
 map("n", "<leader>bp", "<cmd>bprev<cr>", { desc = "Switch to next buffer" })
-map("n", "<Tab>", "<cmd>e #<cr>", { desc = "Switch to other buffer" })
 map("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Delete buffer" })
 
 if has("harpoon") then
@@ -175,7 +174,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = desc })
     end
-
 
     lspmap('n', '<leader>cr', vim.lsp.buf.rename, '[R]ename')
     lspmap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
