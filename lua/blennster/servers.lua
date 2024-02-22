@@ -101,7 +101,8 @@ M.servers = function()
         cssls = {},
     }
 
-    if vim.fn.filereadable(vim.fn.expand('./tools/gopackagesdriver.sh')) == 1 then
+    if vim.fn.filereadable(vim.loop.cwd() .. '/tools/gopackagesdriver.sh') == 1 then
+        -- if true then
         servers.gopls = {
             settings = {
                 gopls = {
