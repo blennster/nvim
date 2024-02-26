@@ -11,11 +11,11 @@ return {
   { 'numToStr/Comment.nvim',     opts = {}, lazy = false },
   { 'mbbill/undotree' },
   {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
     opts = {}
   },
-  "lambdalisue/suda.vim",
-  "terrastruct/d2-vim"
+  'lambdalisue/suda.vim',
+  'terrastruct/d2-vim'
 }

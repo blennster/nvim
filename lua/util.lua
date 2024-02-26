@@ -1,6 +1,6 @@
 local M = {}
 
-M.root_patterns = { ".git", "lua", ".gitignore" }
+M.root_patterns = { '.git', 'lua', '.gitignore' }
 
 -- returns the root directory based on:
 -- * lsp workspace folders
@@ -11,13 +11,13 @@ M.root_patterns = { ".git", "lua", ".gitignore" }
 function M.get_root()
   ---@type string?
   local path = vim.api.nvim_buf_get_name(0)
-  path = path ~= "" and vim.loop.fs_realpath(path) or nil
+  path = path ~= '' and vim.loop.fs_realpath(path) or nil
   ---@type string[]
   local roots = {}
   if path then
     for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
       local workspace = client.config.workspace_folders
-      local paths = workspace and vim.tbl_map(function(ws)
+      local paths = workspace and vim.tbl_map(function (ws)
         return vim.uri_to_fname(ws.uri)
       end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
       for _, p in ipairs(paths) do
@@ -30,7 +30,7 @@ function M.get_root()
       end
     end
   end
-  table.sort(roots, function(a, b)
+  table.sort(roots, function (a, b)
     return #a > #b
   end)
   ---@type string?

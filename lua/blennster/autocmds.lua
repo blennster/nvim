@@ -1,8 +1,8 @@
 -- move cursor to last location for file
-vim.api.nvim_create_autocmd("BufReadPost", {
+vim.api.nvim_create_autocmd('BufReadPost', {
   group = vim.g.augroup,
-  callback = function()
-    local exclude = { "gitcommit" }
+  callback = function ()
+    local exclude = { 'gitcommit' }
     local buf = vim.api.nvim_get_current_buf()
     if vim.tbl_contains(exclude, vim.bo[buf].filetype) then
       return
@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
+  callback = function ()
     vim.highlight.on_yank()
   end,
   group = vim.g.augroup,

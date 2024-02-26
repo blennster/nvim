@@ -6,7 +6,7 @@
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.g.augroup = vim.api.nvim_create_augroup("blennster", { clear = true })
+vim.g.augroup = vim.api.nvim_create_augroup('blennster', { clear = true })
 
 require 'blennster.settings'
 
@@ -29,9 +29,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   {
-    "folke/tokyonight.nvim",
+    'folke/tokyonight.nvim',
     priority = 1,
-    init = function()
+    init = function ()
       vim.cmd.colorscheme 'tokyonight'
     end,
   },
