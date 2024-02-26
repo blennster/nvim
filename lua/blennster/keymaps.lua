@@ -151,6 +151,9 @@ vim.api.nvim_create_user_command('TelescopeBind',
     map('n', '<leader>sb', builtin.buffers, { desc = '[s]earch [b]uffers' })
 
     map('n', '<leader>sf', builtin.find_files, { desc = '[s]earch [f]iles' })
+    map('n', '<leader>sF', function()
+      builtin.find_files { cwd = require('telescope.utils').buffer_dir() }
+    end, { desc = '[s]earch [F]iles (from here)' })
     map('n', '<leader>sh', builtin.help_tags, { desc = '[s]earch [h]elp' })
     map('n', '<leader>sw', builtin.grep_string, { desc = '[s]earch current [w]ord' })
     map('n', '<leader>st', builtin.live_grep, { desc = '[s]earch [t]ext' })
