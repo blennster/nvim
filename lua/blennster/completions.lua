@@ -18,12 +18,13 @@ return {
           highlight = true,
         }
       },
+      { 'hrsh7th/cmp-nvim-lsp' },
     },
     config = function ()
       require('neodev').setup()
 
       local lspconfig = require('lspconfig')
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
       capabilities.textDocument.completion.completionItem.snippetSupport = true
 
       lspconfig.util.default_config = vim.tbl_extend('force', lspconfig.util.default_config, {
