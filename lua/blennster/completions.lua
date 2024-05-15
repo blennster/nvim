@@ -27,7 +27,7 @@ return {
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-      lspconfig.util.default_config = vim.tbl_extend('force', lspconfig.util.default_config, {
+      lspconfig.util.default_config = vim.tbl_extend('keep', lspconfig.util.default_config, {
         capabilities = capabilities,
       })
 
@@ -42,7 +42,7 @@ return {
         group = vim.api.nvim_create_augroup('LspConfig', {}),
         callback = function (args)
           local bufnr = args.buf
-          vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
+          -- vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
           local client = vim.lsp.get_client_by_id(args.data.client_id)
 
           if client.server_capabilities.documentSymbolProvider then

@@ -1,7 +1,7 @@
 local M = {}
 
 M.servers = function ()
-  local efmEslint = require('efmls-configs.linters.eslint')
+  local efmEslint = require('efmls-configs.linters.eslint_d')
   local efmPrettier = require('efmls-configs.formatters.prettier')
   require('efmls-configs.formatters.shfmt') -- Include so healthcheck can report
   local efmLanguages = {
@@ -66,7 +66,6 @@ M.servers = function ()
         }
       }
     },
-    -- tsserver = {},
     -- html = { filetypes = { 'html', 'twig', 'hbs'} },
     lua_ls = {
       settings = {
