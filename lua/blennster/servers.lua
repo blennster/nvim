@@ -2,7 +2,7 @@ local M = {}
 
 M.servers = function ()
   local efmEslint = require('efmls-configs.linters.eslint_d')
-  local efmPrettier = require('efmls-configs.formatters.prettier')
+  local efmPrettier = require('efmls-configs.formatters.prettier_d')
   require('efmls-configs.formatters.shfmt') -- Include so healthcheck can report
   local efmLanguages = {
     python = {
@@ -40,7 +40,7 @@ M.servers = function ()
     efm = {
       init_options = { documentFormatting = true },
       settings = {
-        rootMarkers = { '.git/' },
+        rootMarkers = { '.git/', '.gitignore' },
         languages = efmLanguages
       },
       filetypes = vim.tbl_keys(efmLanguages)
@@ -100,6 +100,11 @@ M.servers = function ()
     cssls = {},
     taplo = {},
     jsonnet_ls = {},
+    -- sourcekit = {
+    --   root_dir = require('lspconfig').util.root_pattern('buildServer.json', '*.xcodeproj', '*.xcworkspace',
+    --     'compile_commands.json', 'Package.swift', '.git', '.clang-format', '.clangd'),
+    --   single_file_support = true
+    -- }
   }
 
   if vim.fn.filereadable(vim.loop.cwd() .. '/tools/gopackagesdriver.sh') == 1 then

@@ -131,15 +131,15 @@ return {
       }
     end
   },
-  {
-    'Exafunction/codeium.vim',
-    config = function ()
-      vim.g.codeium_no_map_tab = false
-      vim.g.codeium_enabled = false
-
-      vim.keymap.set('i', '<C-g>', function ()
-        return vim.fn['codeium#Accept']()
-      end, { expr = true })
-    end,
-  },
+  -- {
+  --   'Exafunction/codeium.vim',
+  --   config = function ()
+  --     vim.g.codeium_no_map_tab = false
+  --     vim.g.codeium_enabled = false
+  --
+  --     vim.keymap.set('i', '<C-g>', function ()
+  --       return vim.fn['codeium#Accept']()
+  --     end, { expr = true })
+  --   end,
+  -- },
 }

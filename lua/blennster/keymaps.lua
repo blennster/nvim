@@ -16,6 +16,7 @@ end
 
 -- [[ Basic Keymaps ]]
 
+
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 map({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -44,21 +45,26 @@ map('i', '<A-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move up' })
 map('v', '<A-j>', ":m '>+1<cr>gv=gv", { desc = 'Move down' })
 map('v', '<A-k>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
 
+-- Show help using ctrl K
+map('n', '<C-K>', function ()
+  vim.cmd('Man ' .. vim.fn.expand('<cword>'))
+end, { desc = 'Show hover' })
+
 -- [[ Netrw ]]
 if not has('neo-tree.nvim') then
   map('n', '<leader>e', function ()
-    local netrw_open = vim.api.nvim_buf_get_option(0, 'filetype') == 'netrw'
+    local netrw_open = vim.api.nvim_buf_get_option_value(0, 'filetype') == 'netrw'
     if not netrw_open then
       vim.cmd [[Ex]]
-    elseif vim.api.nvim_buf_get_option(0, 'filetype') == 'netrw' then
+    else
       vim.cmd [[bd]]
     end
   end, { desc = 'Toggle explorer' })
   map('n', '<leader>E', function ()
-    local netrw_open = vim.api.nvim_buf_get_option(0, 'filetype') == 'netrw'
+    local netrw_open = vim.api.nvim_buf_get_option_value(0, 'filetype') == 'netrw'
     if not netrw_open then
       vim.cmd [[Ex .]]
-    elseif vim.api.nvim_buf_get_option(0, 'filetype') == 'netrw' then
+    else
       vim.cmd [[bd]]
     end
   end, { desc = 'Toggle explorer' })
@@ -86,7 +92,7 @@ map('n', '<leader>bd', '<cmd>bd<cr>', { desc = 'Delete buffer' })
 
 if has('harpoon') then
   map('n', '<C-m>', function ()
-    require('harpoon'):list():append()
+    require('harpoon'):list():add()
   end, { desc = 'add to harpoon list (mark)' })
   map('n', '<leader><leader>', function ()
     local harpoon = require('harpoon')
@@ -187,7 +193,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
     lspmap('n', 'gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
     lspmap('n', '<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
 
-    if client.server_capabilities.documentFormattingProvider then
+    lspmap('n', '<leader>cs', vim.lsp.buf.signature_help, 'Show [S]ignature help')
+    lspmap('i', '<C-j>', vim.lsp.buf.signature_help, 'Show Signature help')
+
+
+    if client ~= nil and client.server_capabilities.documentFormattingProvider then
+      lspmap('n', 'gO', require('telescope.builtin').lsp_document_symbols, '[S]earch Document [S]ymbols')
       lspmap('n', '<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch Document [S]ymbols')
       lspmap('n', '<leader>sS', require('telescope.builtin').lsp_dynamic_workspace_symbols,
         '[S]earch Workspace [S]ymbols')
@@ -200,7 +211,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     lspmap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
     -- Create a command `:Format` local to the LSP buffer
-    if client.server_capabilities.documentFormattingProvider then
+    if client ~= nil and client.server_capabilities.documentFormattingProvider then
       vim.api.nvim_buf_create_user_command(bufnr, 'Format', function (_)
         vim.lsp.buf.format()
       end, { desc = 'Format current buffer with LSP' })

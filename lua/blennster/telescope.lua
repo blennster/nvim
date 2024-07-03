@@ -34,8 +34,9 @@ return {
       defaults = {
         mappings = {
           i = {
-            ['<C-f>'] = require('telescope.actions').preview_scrolling_down,
-            ['<C-d>'] = require('telescope.actions').preview_scrolling_up,
+            ['<C-d>'] = require('telescope.actions').preview_scrolling_down,
+            ['<C-u>'] = require('telescope.actions').preview_scrolling_up,
+            ['<C-x>'] = require('telescope.actions').delete_buffer,
           }
         },
       },

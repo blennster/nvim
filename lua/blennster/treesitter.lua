@@ -15,7 +15,12 @@ return {
       auto_install = true,
       ignore_install = { '' },
 
-      highlight = { enable = true },
+      highlight = {
+        enable = true,
+        disable = function (lang, bufnr) -- Disable in large buffers
+          return vim.api.nvim_buf_line_count(bufnr) > 20000
+        end,
+      },
       indent = { enable = true },
       incremental_selection = {
         enable = true,

@@ -7,10 +7,12 @@ vim.api.nvim_create_user_command('FormatToggle', function ()
   print('Setting autoformatting to: ' .. tostring(format_is_enabled))
 end, {})
 
+local util = require('util')
 vim.api.nvim_create_autocmd('BufWritePre', {
   group = vim.g.augroup,
   callback = function ()
-    if not format_is_enabled then
+    local no_format = vim.fn.filereadable(util.get_root() .. '/.no_format')
+    if not format_is_enabled or no_format == 1 then
       return
     end
 

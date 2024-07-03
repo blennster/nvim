@@ -8,7 +8,15 @@ return {
       scope = { enabled = true },
     },
   },
-  { 'RRethy/vim-illuminate' },
+  {
+    'RRethy/vim-illuminate',
+    config = function ()
+      require('illuminate').configure({
+        large_file_cutoff = 20000,
+        large_file_overrides = nil,
+      })
+    end
+  },
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
 }

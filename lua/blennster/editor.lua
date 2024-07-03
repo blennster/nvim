@@ -17,5 +17,6 @@ return {
     opts = {}
   },
   'lambdalisue/suda.vim',
-  'terrastruct/d2-vim'
+  'terrastruct/d2-vim',
+  'bsuth/emacs-bindings.nvim',
 }
