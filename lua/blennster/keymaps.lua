@@ -196,6 +196,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     lspmap('n', '<leader>cs', vim.lsp.buf.signature_help, 'Show [S]ignature help')
     lspmap('i', '<C-j>', vim.lsp.buf.signature_help, 'Show Signature help')
 
+    lspmap('n', '<leader>ci', function ()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
+    end, 'Toggle [i]nlay hints')
 
     if client ~= nil and client.server_capabilities.documentFormattingProvider then
       lspmap('n', 'gO', require('telescope.builtin').lsp_document_symbols, '[S]earch Document [S]ymbols')
@@ -230,6 +233,26 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
+vim.api.nvim_create_user_command('DapBind',
+  function ()
+    local dap = require('dap')
+    local dapui = require('dapui')
+
+    -- See `:help telescope.builtin`
+    map('n', '<leader>dd', dap.continue, { desc = 'dap continue/start' })
+    map('n', '<leader>dc', dap.run_to_cursor, { desc = 'run to cursor' })
+    map('n', '<leader>db', dap.toggle_breakpoint, { desc = 'dap toggle breakpoint' })
+    map('n', '<leader>ds', dap.step_over, { desc = 'dap step over' })
+    map('n', '<leader>di', dap.step_into, { desc = 'dap step into' })
+    map('n', '<leader>do', dap.step_out, { desc = 'dap step out' })
+    map('n', '<leader>dx', function ()
+      dap.close()
+      dapui.close()
+    end, { desc = 'dap close' })
+
+    map('n', '<leader>dr', dap.run_last, { desc = 'dap rerun' })
+  end, {})
+
 require 'which-key'.register({
   g = {
     name = 'git',
@@ -238,17 +261,22 @@ require 'which-key'.register({
 vim.api.nvim_create_user_command('GitsignsAttach',
   function (opts)
     local bufnr = tonumber(opts.args)
-    map('n', '<leader>gp', require('gitsigns').prev_hunk,
+    local gitsigns = require('gitsigns')
+    map('n', '<leader>gp', gitsigns.prev_hunk,
       { buffer = bufnr, desc = '[g]it goto [p]revious Hunk' })
-    map('n', '<leader>gn', require('gitsigns').next_hunk,
+    map('n', '<leader>gn', gitsigns.next_hunk,
       { buffer = bufnr, desc = '[g]it goto [n]ext Hunk' })
-    map('n', '<leader>gk', require('gitsigns').preview_hunk,
+    map('n', '<leader>gk', gitsigns.preview_hunk,
       { buffer = bufnr, desc = '[g]it preview hun[k]' })
-    map('n', '<leader>gb', require('gitsigns').blame_line,
+    map('n', '<leader>gb', gitsigns.blame_line,
       { buffer = bufnr, desc = '[g]it [b]lame' })
-    map('n', '<leader>gd', require('gitsigns').diffthis,
+    map('n', '<leader>gd', function ()
+        gitsigns.diffthis(nil, {
+          split = 'belowright'
+        })
+      end,
       { buffer = bufnr, desc = '[g]it [d]iff' })
-    map('n', '<leader>gr', require('gitsigns').reset_hunk,
+    map('n', '<leader>gr', gitsigns.reset_hunk,
       { buffer = bufnr, desc = '[g]it [r]eset hunk' })
   end
   , { nargs = 1 })

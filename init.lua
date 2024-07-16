@@ -1,6 +1,5 @@
---[[
-- https://learnxinyminutes.com/docs/lua/
---]]
+--[[ - https://learnxinyminutes.com/docs/lua/ ]]
+--
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -30,9 +29,9 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   {
     'folke/tokyonight.nvim',
-    priority = 1,
+    priority = 1000,
     init = function ()
-      vim.cmd.colorscheme 'tokyonight'
+      vim.cmd.colorscheme 'tokyonight-storm'
     end,
   },
 
@@ -45,11 +44,13 @@ require('lazy').setup({
 
   require 'blennster.neotree',
   require 'blennster.treesitter',
+  require 'blennster.dap'
 }, {})
 
 require 'blennster.keymaps'
 require 'blennster.autocmds'
 require 'blennster.autoformat'
 
+
 -- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 et:
