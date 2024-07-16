@@ -35,7 +35,7 @@ vim.o.timeoutlen = 300
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
-vim.o.sw = 4
+vim.o.sw = 0
 vim.o.ts = 4
 vim.o.smartindent = true
 vim.o.autoindent = true
