@@ -9,7 +9,7 @@ return {
       { 'j-hui/fidget.nvim',               event = 'LspAttach', tag = 'legacy',    opts = {} },
       { 'creativenull/efmls-configs-nvim', event = 'LspAttach', version = 'v1.x.x' },
       -- Additional lua configuration, makes nvim stuff amazing!
-      { 'folke/neodev.nvim',               ft = 'lua' },
+      { 'folke/lazydev.nvim',              ft = 'lua',          opts = {} },
       'b0o/schemastore.nvim',
       {
         'SmiteshP/nvim-navic',
@@ -20,9 +20,10 @@ return {
       },
       { 'hrsh7th/cmp-nvim-lsp' },
     },
+    opts = {
+      inlay_hints = true
+    },
     config = function ()
-      require('neodev').setup()
-
       local lspconfig = require('lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -72,12 +73,35 @@ return {
       'hrsh7th/cmp-buffer',
     },
     opts = function ()
+      -- gray deprecated
+      vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { bg = 'NONE', strikethrough = true, fg = '#808080' })
+      -- pink
+      vim.api.nvim_set_hl(0, 'CmpItemKindVariable', { bg = 'NONE', fg = '#e678ef' })
+
       local cmp = require('cmp')
       local defaults = require('cmp.config.default')()
       local luasnip = require 'luasnip'
       require('luasnip.loaders.from_vscode').lazy_load()
       luasnip.config.setup {}
       return {
+        formatting = {
+          -- format = require('lspkind').cmp_format {}
+          format = function (entry, vim_item)
+            local kind_icons = require('common').icons.kinds
+            -- Kind icons
+            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatenates the icons with the name of the item kind
+            -- Source
+            vim_item.menu = ({
+              buffer = '[BUF]',
+              nvim_lsp = '[LSP]',
+              luasnip = '[SINP]',
+              nvim_lua = '[Lua]',
+              latex_symbols = '[TeX]',
+              path = '[PATH]',
+            })[entry.source.name]
+            return vim_item
+          end
+        },
         snippet = {
           expand = function (args)
             require('luasnip').lsp_expand(args.body)
@@ -126,6 +150,7 @@ return {
           { name = 'luasnip' },
           { name = 'buffer' },
           { name = 'path' },
+          { name = 'lazydev', group_index = 0 }
         }),
         sorting = defaults.sorting,
       }
