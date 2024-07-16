@@ -3,7 +3,10 @@ local M = {}
 M.servers = function ()
   local efmEslint = require('efmls-configs.linters.eslint_d')
   local efmPrettier = require('efmls-configs.formatters.prettier_d')
+
   require('efmls-configs.formatters.shfmt') -- Include so healthcheck can report
+  require('efmls-configs.linters.shellcheck')
+
   local efmLanguages = {
     python = {
       require('efmls-configs.linters.flake8'),
@@ -16,7 +19,6 @@ M.servers = function ()
         formatCommand = 'shfmt -i 0 -sr -',
         formatStdin = true
       },
-      require('efmls-configs.linters.shellcheck')
     },
     yaml = {
       {
@@ -45,9 +47,26 @@ M.servers = function ()
       },
       filetypes = vim.tbl_keys(efmLanguages)
     },
-    clangd = {},
+    clangd = {
+      cmd = {
+        'clangd',
+        '--query-driver=/opt/homebrew/bin/*gcc'
+      }
+    },
     gopls = {},
-    pyright = {},
+    -- pyright = {},
+    basedpyright = {
+      settings = {
+        basedpyright = {
+          analysis = {
+            autoImportCompletions = true,
+            diagnosticSeverityOverrides = {
+              reportMissingTypeStubs = false
+            }
+          }
+        }
+      }
+    },
     rust_analyzer = {},
     yamlls = {
       settings = {
@@ -100,6 +119,7 @@ M.servers = function ()
     cssls = {},
     taplo = {},
     jsonnet_ls = {},
+    cmake = {},
     -- sourcekit = {
     --   root_dir = require('lspconfig').util.root_pattern('buildServer.json', '*.xcodeproj', '*.xcworkspace',
     --     'compile_commands.json', 'Package.swift', '.git', '.clang-format', '.clangd'),
