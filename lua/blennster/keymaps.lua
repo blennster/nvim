@@ -143,11 +143,11 @@ if has('noice.nvim') then
   map('n', '<leader>nn', '<cmd>Noice<cr>', { desc = 'Noice' })
 end
 
-require 'which-key'.register({
-  s = {
-    name = 'search',
+require 'which-key'.add(
+  {
+    { '<leader>s', group = 'search' },
   }
-}, { prefix = '<leader>' })
+)
 vim.api.nvim_create_user_command('TelescopeBind',
   function ()
     local builtin = require('telescope.builtin')
@@ -213,6 +213,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Lesser used LSP functionality
     lspmap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+    lspmap('n', '<leader>ch', require('clangd_extensions.switch_source_header').switch_source_header,
+      'Switch source/[h]eader')
+
     -- Create a command `:Format` local to the LSP buffer
     if client ~= nil and client.server_capabilities.documentFormattingProvider then
       vim.api.nvim_buf_create_user_command(bufnr, 'Format', function (_)
@@ -220,9 +223,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end, { desc = 'Format current buffer with LSP' })
     end
 
-    require 'which-key'.register({
-      c = { name = 'code', }
-    }, { prefix = '<leader>' })
+    require 'which-key'.add({
+      { '<leader>c', group = 'code' }
+    })
 
     -- Diagnostic keymaps
     lspmap('n', '[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
@@ -242,6 +245,13 @@ vim.api.nvim_create_user_command('DapBind',
     map('n', '<leader>dd', dap.continue, { desc = 'dap continue/start' })
     map('n', '<leader>dc', dap.run_to_cursor, { desc = 'run to cursor' })
     map('n', '<leader>db', dap.toggle_breakpoint, { desc = 'dap toggle breakpoint' })
+    map('n', '<leader>dB', function ()
+      local cond = vim.fn.input('Condition: ')
+      dap.set_breakpoint(cond)
+    end, { desc = 'dap toggle breakpoint' })
+
+    -- local view = require 'dap.ui.widgets'.hover()
+    -- map('n', '<leader>dk', view.toggle, { desc = 'dap hover' })
     map('n', '<leader>ds', dap.step_over, { desc = 'dap step over' })
     map('n', '<leader>di', dap.step_into, { desc = 'dap step into' })
     map('n', '<leader>do', dap.step_out, { desc = 'dap step out' })
@@ -253,11 +263,9 @@ vim.api.nvim_create_user_command('DapBind',
     map('n', '<leader>dr', dap.run_last, { desc = 'dap rerun' })
   end, {})
 
-require 'which-key'.register({
-  g = {
-    name = 'git',
-  }
-}, { prefix = '<leader>' })
+require 'which-key'.add({
+  { '<leader>g', group = 'git' }
+})
 vim.api.nvim_create_user_command('GitsignsAttach',
   function (opts)
     local bufnr = tonumber(opts.args)

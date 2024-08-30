@@ -2,6 +2,7 @@ return {
   {
     'mfussenegger/nvim-dap',
     config = function ()
+      vim.fn.sign_define('DapBreakpoint', { text = require 'common'.icons.dap.Breakpoint, texthl = 'Error' })
       local dap = require('dap')
 
       local port = 13300
@@ -25,8 +26,8 @@ return {
           request = 'launch',
           program = function ()
             local a_out = vim.fn.getcwd() .. '/a.out'
-            if vim.fn.filereadable(a_out) then
-              vim.notify_once('Running C/C++ debug on file ' .. a_out)
+            if vim.fn.filereadable(a_out) == 1 then
+              print('Running C/C++ debug on file ' .. a_out)
               return a_out
             end
 

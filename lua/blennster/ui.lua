@@ -18,5 +18,5 @@ return {
     end
   },
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim', opts = { icons = { mappings = false } } },
 }

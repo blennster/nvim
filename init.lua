@@ -7,13 +7,18 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.augroup = vim.api.nvim_create_augroup('blennster', { clear = true })
 
+vim.api.nvim_create_user_command('LspLogClear', function ()
+  os.remove(require('vim.lsp.log').get_filename())
+  print('Cleaned lsp logs')
+end, {})
+
 require 'blennster.settings'
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system {
     'git',
     'clone',
@@ -27,11 +32,18 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require('lazy').setup({
+  -- {
+  --   'folke/tokyonight.nvim',
+  --   priority = 1000,
+  --   init = function ()
+  --     vim.cmd.colorscheme 'tokyonight-storm'
+  --   end,
+  -- },
   {
-    'folke/tokyonight.nvim',
+    'Shatur/neovim-ayu',
     priority = 1000,
     init = function ()
-      vim.cmd.colorscheme 'tokyonight-storm'
+      vim.cmd.colorscheme 'ayu-mirage'
     end,
   },
 
@@ -44,7 +56,8 @@ require('lazy').setup({
 
   require 'blennster.neotree',
   require 'blennster.treesitter',
-  require 'blennster.dap'
+  require 'blennster.dap',
+  require 'blennster.remote',
 }, {})
 
 require 'blennster.keymaps'

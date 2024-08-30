@@ -41,6 +41,7 @@ vim.o.smartindent = true
 vim.o.autoindent = true
 vim.o.expandtab = true
 vim.o.cursorline = true
+vim.o.cino = 'l1'
 
 vim.cmd [[set nocp]]
 vim.cmd [[filetype plugin on]]

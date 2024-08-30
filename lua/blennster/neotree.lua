@@ -4,6 +4,7 @@ return {
   cmd = 'Neotree',
   dependencies = {
     'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+    -- { 'echasnovski/mini.icons', version = false, opts = {} },
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
   },

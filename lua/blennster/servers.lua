@@ -49,6 +49,7 @@ M.servers = function ()
     },
     clangd = {
       cmd = {
+        -- 'xcrun',
         'clangd',
         '--query-driver=/opt/homebrew/bin/*gcc'
       }

@@ -21,7 +21,7 @@ return {
           return vim.api.nvim_buf_line_count(bufnr) > 20000
         end,
       },
-      indent = { enable = true },
+      -- indent = { enable = true },
       incremental_selection = {
         enable = true,
         keymaps = {
