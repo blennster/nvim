@@ -32,13 +32,13 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require('lazy').setup({
-  -- {
-  --   'folke/tokyonight.nvim',
-  --   priority = 1000,
-  --   init = function ()
-  --     vim.cmd.colorscheme 'tokyonight-storm'
-  --   end,
-  -- },
+  {
+    'folke/tokyonight.nvim',
+    priority = 1000,
+    init = function ()
+      -- vim.cmd.colorscheme 'tokyonight-storm'
+    end,
+  },
   {
     'Shatur/neovim-ayu',
     priority = 1000,
@@ -58,6 +58,7 @@ require('lazy').setup({
   require 'blennster.treesitter',
   require 'blennster.dap',
   require 'blennster.remote',
+  require 'blennster.ai'
 }, {})
 
 require 'blennster.keymaps'

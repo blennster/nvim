@@ -64,6 +64,10 @@ return {
         current_buffer_fuzzy_find = {
           theme = 'dropdown',
           previewer = false,
+        },
+        lsp_incoming_calls = {
+          theme = 'dropdown',
+          previewer = true,
         }
       }
     }

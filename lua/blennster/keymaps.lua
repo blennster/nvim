@@ -16,7 +16,6 @@ end
 
 -- [[ Basic Keymaps ]]
 
-
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 map({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -47,7 +46,10 @@ map('v', '<A-k>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
 
 -- Show help using ctrl K
 map('n', '<C-K>', function ()
-  vim.cmd('Man ' .. vim.fn.expand('<cword>'))
+  local cword = vim.fn.expand('<cword>')
+  if cword ~= '' then
+    vim.cmd('Man ' .. cword)
+  end
 end, { desc = 'Show hover' })
 
 -- [[ Netrw ]]
@@ -188,10 +190,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
     lspmap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
     lspmap('v', 'ga', vim.lsp.buf.code_action, 'Code [A]ction')
 
-    lspmap('n', 'gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+    lspmap('n', 'gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
     lspmap('n', 'gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-    lspmap('n', 'gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-    lspmap('n', '<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+    lspmap('n', 'gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+    lspmap('n', 'gD', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+
+    lspmap('n', '<leader>si', require('telescope.builtin').lsp_incoming_calls,
+      '[S]earch [i]ncoming calls')
+    lspmap('n', '<leader>so', require('telescope.builtin').lsp_outgoing_calls,
+      '[S]earch [o]utgoing calls')
 
     lspmap('n', '<leader>cs', vim.lsp.buf.signature_help, 'Show [S]ignature help')
     lspmap('i', '<C-j>', vim.lsp.buf.signature_help, 'Show Signature help')
@@ -213,6 +220,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Lesser used LSP functionality
     lspmap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+    lspmap('n', '<C-s>', require('clangd_extensions.switch_source_header').switch_source_header,
+      'Switch source/[h]eader')
     lspmap('n', '<leader>ch', require('clangd_extensions.switch_source_header').switch_source_header,
       'Switch source/[h]eader')
 
@@ -286,6 +295,10 @@ vim.api.nvim_create_user_command('GitsignsAttach',
       { buffer = bufnr, desc = '[g]it [d]iff' })
     map('n', '<leader>gr', gitsigns.reset_hunk,
       { buffer = bufnr, desc = '[g]it [r]eset hunk' })
+    map('n', '<leader>gs', gitsigns.stage_hunk,
+      { buffer = bufnr, desc = '[g]it [s]tage' })
+    map('n', '<leader>gl', gitsigns.blame_line,
+      { buffer = bufnr, desc = '[g]it blame [l]ine' })
   end
   , { nargs = 1 })
 map('n', '<leader>gg', '<cmd>LazyGit<cr>', { desc = 'Lazy [g]it' })
@@ -294,3 +307,7 @@ map('n', '<leader>u', function ()
   vim.cmd [[UndotreeToggle]]
   vim.cmd [[UndotreeFocus]]
 end, { desc = '[u]ndotree' })
+
+map('n', '<leader>a', function ()
+  vim.cmd [[ ChatGPT ]]
+end, { desc = 'Toggle Chat' })

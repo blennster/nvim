@@ -1,15 +1,19 @@
 local M = {}
 
 M.servers = function ()
+  local fs = require('efmls-configs.fs')
   local efmEslint = require('efmls-configs.linters.eslint_d')
   local efmPrettier = require('efmls-configs.formatters.prettier_d')
 
   require('efmls-configs.formatters.shfmt') -- Include so healthcheck can report
   require('efmls-configs.linters.shellcheck')
 
+  local flake8 = require('efmls-configs.linters.flake8')
+  flake8.lintCommand = string.format('%s --max-line-length 120 -', fs.executable('flake8', 'BUNDLE'))
+
   local efmLanguages = {
     python = {
-      require('efmls-configs.linters.flake8'),
+      flake8,
       require('efmls-configs.formatters.autopep8'),
     },
     rust = { require('efmls-configs.formatters.rustfmt') },

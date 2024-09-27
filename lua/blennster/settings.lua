@@ -43,6 +43,9 @@ vim.o.expandtab = true
 vim.o.cursorline = true
 vim.o.cino = 'l1'
 
+vim.o.list = true
+vim.o.listchars = 'tab:>·,trail:·,nbsp:⎵'
+
 vim.cmd [[set nocp]]
 vim.cmd [[filetype plugin on]]
 vim.cmd [[syntax on]]
