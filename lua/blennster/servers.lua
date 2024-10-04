@@ -119,7 +119,7 @@ M.servers = function ()
       },
     },
     bashls = {},
-    tsserver = {},
+    ts_ls = {},
     zls = {},
     cssls = {},
     taplo = {},
