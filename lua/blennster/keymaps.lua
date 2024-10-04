@@ -311,3 +311,21 @@ end, { desc = '[u]ndotree' })
 map('n', '<leader>a', function ()
   vim.cmd [[ ChatGPT ]]
 end, { desc = 'Toggle Chat' })
+
+-- Fix terminal
+function _G.set_terminal_keymaps()
+  local opts = { buffer = 0 }
+  map('t', '<esc>', [[<C-\><C-n>]], opts)
+  map('t', 'jk', [[<C-\><C-n>]], opts)
+  map('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+  map('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+  map('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+  map('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+  map('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+end
+
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+
+map('n', '<leader>tt', function ()
+  vim.cmd [[ToggleTerm]]
+end, { desc = 'Toggle terminal' })
