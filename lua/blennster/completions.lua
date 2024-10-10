@@ -84,11 +84,15 @@ return {
       vim.api.nvim_set_hl(0, 'CmpItemKindVariable', { bg = 'NONE', fg = '#e678ef' })
 
       local cmp = require('cmp')
+
       -- local defaults = require('cmp.config.default')()
       local luasnip = require 'luasnip'
       require('luasnip.loaders.from_vscode').lazy_load()
       luasnip.config.setup {}
       cmp.setup {
+        window = {
+          documentation = cmp.config.window.bordered()
+        },
         formatting = {
           fields = { 'abbr', 'kind' },
           expandable_indicator = true,
@@ -170,6 +174,11 @@ return {
         })),
       }
     end
+  },
+  {
+    'Fildo7525/pretty_hover',
+    event = 'LspAttach',
+    opts = {}
   },
   -- {
   --   'Exafunction/codeium.vim',

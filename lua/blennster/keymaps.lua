@@ -215,7 +215,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     -- See `:help K` for why this keymap
-    lspmap('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
+    -- lspmap('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
+    lspmap('n', 'K', require('pretty_hover').hover, 'Hover Documentation')
 
     -- Lesser used LSP functionality
     lspmap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
