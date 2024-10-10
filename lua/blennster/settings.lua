@@ -46,6 +46,24 @@ vim.o.cino = 'l1'
 vim.o.list = true
 vim.o.listchars = 'tab:>·,trail:·,nbsp:⎵'
 
+
+-- Apply for windows
+if vim.fn.has('win32') == 1 then
+  local powershell_options = {
+    shell = vim.fn.executable 'pwsh' == 1 and 'pwsh' or 'powershell',
+    shellcmdflag =
+    '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
+    shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait',
+    shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode',
+    shellquote = '',
+    shellxquote = '',
+  }
+
+  for option, value in pairs(powershell_options) do
+    vim.opt[option] = value
+  end
+end
+
 vim.cmd [[set nocp]]
 vim.cmd [[filetype plugin on]]
 vim.cmd [[syntax on]]
