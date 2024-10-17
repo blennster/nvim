@@ -158,17 +158,41 @@ vim.api.nvim_create_user_command('TelescopeBind',
     map('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
     map('n', '<leader>sb', builtin.buffers, { desc = '[s]earch [b]uffers' })
 
-    map('n', '<leader>sf', builtin.find_files, { desc = '[s]earch [f]iles' })
+    map('n', '<leader>sg', builtin.find_files, { desc = '[s]earch [f]iles (non git)' })
+    map('n', '<leader>sf', builtin.git_files, { desc = '[s]earch [f]iles (git)' })
     map('n', '<leader>sF', function ()
       builtin.find_files { cwd = require('telescope.utils').buffer_dir() }
     end, { desc = '[s]earch [F]iles (from here)' })
     map('n', '<leader>sh', builtin.help_tags, { desc = '[s]earch [h]elp' })
     map('n', '<leader>sw', builtin.grep_string, { desc = '[s]earch current [w]ord' })
     map('n', '<leader>st', builtin.live_grep, { desc = '[s]earch [t]ext' })
-    map('n', '<leader>sg', builtin.git_files, { desc = '[s]earch [g]it Files' })
-    map('n', '<leader>sd', builtin.diagnostics, { desc = '[s]earch [d]iagnostics' })
     map('n', '<leader>sk', builtin.keymaps, { desc = '[s]earch [k]eymaps' })
     map('n', '<leader>sT', builtin.current_buffer_fuzzy_find, { desc = '[s]earch [T]ext in current buffer' })
+  end, {})
+
+vim.api.nvim_create_user_command('FzfBind',
+  function ()
+    local builtin = require('fzf-lua')
+
+    -- See `:help telescope.builtin`
+    map('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
+    map('n', '<leader>sb', builtin.buffers, { desc = '[s]earch [b]uffers' })
+
+    map('n', '<leader>sg', builtin.files, { desc = '[s]earch files (non git)' })
+    map('n', '<leader>sf', function ()
+      if builtin.git_files() then
+      else
+        builtin.files()
+      end
+    end, { desc = '[s]earch [f]iles (git)' })
+    -- map('n', '<leader>sF', function ()
+    --   builtin.find_files { cwd = require('telescope.utils').buffer_dir() }
+    -- end, { desc = '[s]earch [F]iles (from here)' })
+    map('n', '<leader>sh', builtin.helptags, { desc = '[s]earch [h]elp' })
+    map('n', '<leader>sw', builtin.grep_cword, { desc = '[s]earch current [w]ord' })
+    map('n', '<leader>st', builtin.live_grep, { desc = '[s]earch [t]ext' })
+    map('n', '<leader>sk', builtin.keymaps, { desc = '[s]earch [k]eymaps' })
+    map('n', '<leader>sT', builtin.lgrep_curbuf, { desc = '[s]earch [T]ext in current buffer' })
   end, {})
 
 
@@ -190,14 +214,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
     lspmap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
     lspmap('v', 'ga', vim.lsp.buf.code_action, 'Code [A]ction')
 
-    lspmap('n', 'gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-    lspmap('n', 'gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-    lspmap('n', 'gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-    lspmap('n', 'gD', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+    local builtin = require('fzf-lua')
 
-    lspmap('n', '<leader>si', require('telescope.builtin').lsp_incoming_calls,
+    lspmap('n', 'gd', builtin.lsp_definitions, '[G]oto [D]efinition')
+    lspmap('n', 'gr', builtin.lsp_references, '[G]oto [R]eferences')
+    lspmap('n', 'gI', builtin.lsp_implementations, '[G]oto [I]mplementation')
+    lspmap('n', 'gD', builtin.lsp_typedefs, 'Type [D]efinition')
+
+
+    lspmap('n', '<leader>si', builtin.lsp_incoming_calls,
       '[S]earch [i]ncoming calls')
-    lspmap('n', '<leader>so', require('telescope.builtin').lsp_outgoing_calls,
+    lspmap('n', '<leader>so', builtin.lsp_outgoing_calls,
       '[S]earch [o]utgoing calls')
 
     lspmap('n', '<leader>cs', vim.lsp.buf.signature_help, 'Show [S]ignature help')
@@ -208,11 +235,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, 'Toggle [i]nlay hints')
 
     if client ~= nil and client.server_capabilities.documentFormattingProvider then
-      lspmap('n', 'gO', require('telescope.builtin').lsp_document_symbols, '[S]earch Document [S]ymbols')
-      lspmap('n', '<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch Document [S]ymbols')
-      lspmap('n', '<leader>sS', require('telescope.builtin').lsp_dynamic_workspace_symbols,
+      lspmap('n', 'gO', builtin.lsp_document_symbols, '[S]earch Document [S]ymbols')
+      lspmap('n', '<leader>ss', builtin.lsp_document_symbols, '[S]earch Document [S]ymbols')
+      lspmap('n', '<leader>sS', builtin.lsp_workspace_symbols,
         '[S]earch Workspace [S]ymbols')
     end
+    lspmap('n', '<leader>sd', builtin.lsp_document_diagnostics, '[s]earch document [d]iagnostics')
+    lspmap('n', '<leader>sD', builtin.lsp_workspace_diagnostics, '[s]earch workspace [d]iagnostics')
 
     -- See `:help K` for why this keymap
     -- lspmap('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')

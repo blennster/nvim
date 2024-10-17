@@ -48,7 +48,8 @@ require('lazy').setup({
   },
 
   require 'blennster.git',
-  require 'blennster.telescope',
+  -- require 'blennster.telescope',
+  require 'blennster.fzf-lua',
 
   require 'blennster.completions',
   require 'blennster.editor',
