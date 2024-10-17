@@ -1,0 +1,53 @@
+{
+    "SVEP C header file": {
+        "prefix": "svheader",
+        "body": [
+            "#ifndef ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H__",
+            "#define ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H__",
+            "",
+            "/**",
+            "*  @file ${TM_FILENAME}",
+            "*  @brief $1",
+            "* ",
+            "*  @copyright Copyright Svep Design Center AB ${CURRENT_YEAR}",
+            "* /",
+            "",
+            "/**** Includes ****/",
+            "",
+            "/**** Defines ****/",
+            "",
+            "/**** Types ****/",
+            "",
+            "/**** Data ****/",
+            "",
+            "/**** Public functions ****/",
+            "",
+            "#endif",
+            ""
+        ],
+        "description": "SVEP C header file"
+    },
+    "SVEP C file": {
+        "prefix": "svcfile",
+        "body": [
+            "/**",
+            "*  @file ${TM_FILENAME}",
+            "*  @brief $1",
+            "* ",
+            "*  @copyright Copyright Svep Design Center AB ${CURRENT_YEAR}",
+            "* /",
+            "",
+            "/**** Includes ****/",
+            "",
+            "/**** Defines ****/",
+            "",
+            "/**** Types ****/",
+            "",
+            "/**** Data ****/",
+            "",
+            "/**** Private functions ****/",
+            ""
+        ],
+        "description": "SVEP C file"
+    }
+}

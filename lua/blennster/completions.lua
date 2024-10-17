@@ -38,7 +38,7 @@ return {
       -- configure servers
       for server, conf in pairs(servers) do
         lspconfig[server].setup(vim.tbl_extend('keep', conf, {
-          capabilities = capabilities
+          capabilities = capabilities,
         }))
       end
 
@@ -65,7 +65,14 @@ return {
     event = { 'BufReadPre', 'BufNewFile', 'InsertEnter' },
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
+      {
+        'L3MON4D3/LuaSnip',
+        version = 'v2.*',
+        build = 'make install_jsregexp',
+        cond = function ()
+          return vim.fn.executable 'make' == 1
+        end,
+      },
       'saadparwaiz1/cmp_luasnip',
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
@@ -88,7 +95,7 @@ return {
       -- local defaults = require('cmp.config.default')()
       local luasnip = require 'luasnip'
       require('luasnip.loaders.from_vscode').lazy_load()
-      luasnip.config.setup {}
+      require('luasnip.loaders.from_vscode').lazy_load { paths = { './snippets' } }
       cmp.setup {
         window = {
           documentation = cmp.config.window.bordered()
