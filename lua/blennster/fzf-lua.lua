@@ -16,7 +16,8 @@ return {
           ['<M-S-down>'] = 'preview-down',
           ['<M-S-up>']   = 'preview-up',
         },
-      }
+      },
+      fzf_colors = true
     }
     fzflua.register_ui_select()
 
