@@ -201,7 +201,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.g.augroup,
   callback = function (args)
     local bufnr = args.buf
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    -- local client = vim.lsp.get_client_by_id(args.data.client_id)
+
     local lspmap = function (mode, keys, func, desc)
       if desc then
         desc = 'LSP: ' .. desc
@@ -234,12 +235,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
     end, 'Toggle [i]nlay hints')
 
-    if client ~= nil and client.server_capabilities.documentFormattingProvider then
-      lspmap('n', 'gO', builtin.lsp_document_symbols, '[S]earch Document [S]ymbols')
-      lspmap('n', '<leader>ss', builtin.lsp_document_symbols, '[S]earch Document [S]ymbols')
-      lspmap('n', '<leader>sS', builtin.lsp_workspace_symbols,
-        '[S]earch Workspace [S]ymbols')
-    end
+    lspmap('n', 'gO', builtin.lsp_document_symbols, '[S]earch Document [S]ymbols')
+    lspmap('n', '<leader>ss', builtin.lsp_document_symbols, '[S]earch Document [S]ymbols')
+    lspmap('n', '<leader>sS', builtin.lsp_workspace_symbols,
+      '[S]earch Workspace [S]ymbols')
+
     lspmap('n', '<leader>sd', builtin.lsp_document_diagnostics, '[s]earch document [d]iagnostics')
     lspmap('n', '<leader>sD', builtin.lsp_workspace_diagnostics, '[s]earch workspace [d]iagnostics')
 
@@ -254,13 +254,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       'Switch source/[h]eader')
     lspmap('n', '<leader>ch', require('clangd_extensions.switch_source_header').switch_source_header,
       'Switch source/[h]eader')
-
-    -- Create a command `:Format` local to the LSP buffer
-    if client ~= nil and client.server_capabilities.documentFormattingProvider then
-      vim.api.nvim_buf_create_user_command(bufnr, 'Format', function (_)
-        vim.lsp.buf.format()
-      end, { desc = 'Format current buffer with LSP' })
-    end
 
     require 'which-key'.add({
       { '<leader>c', group = 'code' }
@@ -327,6 +320,8 @@ vim.api.nvim_create_user_command('GitsignsAttach',
       { buffer = bufnr, desc = '[g]it [r]eset hunk' })
     map('n', '<leader>gs', gitsigns.stage_hunk,
       { buffer = bufnr, desc = '[g]it [s]tage' })
+    map('n', '<leader>gu', gitsigns.undo_stage_hunk,
+      { buffer = bufnr, desc = '[g]it [u]nstage' })
     map('n', '<leader>gl', gitsigns.blame_line,
       { buffer = bufnr, desc = '[g]it blame [l]ine' })
   end

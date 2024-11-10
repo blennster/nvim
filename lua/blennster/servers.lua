@@ -1,61 +1,68 @@
 local M = {}
 
 M.servers = function ()
-  local fs = require('efmls-configs.fs')
-  local efmEslint = require('efmls-configs.linters.eslint_d')
-  local efmPrettier = require('efmls-configs.formatters.prettier_d')
-
-  require('efmls-configs.formatters.shfmt') -- Include so healthcheck can report
-  require('efmls-configs.linters.shellcheck')
-
-  local flake8 = require('efmls-configs.linters.flake8')
-  flake8.lintCommand = string.format('%s --max-line-length 120 -', fs.executable('flake8', 'BUNDLE'))
-
-  local efmLanguages = {
-    python = {
-      flake8,
-      require('efmls-configs.formatters.autopep8'),
+  require('conform').setup {
+    formatters_by_ft = {
+      -- Conform will run multiple formatters sequentially
+      python = { 'autopep8' },
+      -- You can customize some of the format options for the filetype (:help conform.format)
+      rust = { 'rustfmt' },
+      -- Conform will run the first available formatter
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'prettierd', 'prettier', stop_after_first = true },
+      json = { 'prettierd', 'prettier', stop_after_first = true },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
+      css = { 'prettierd', 'prettier', stop_after_first = true },
+      markdown = { 'prettierd', 'prettier', stop_after_first = true },
+      yaml = { 'yamlfmt' }
     },
-    rust = { require('efmls-configs.formatters.rustfmt') },
-    go = { require('efmls-configs.formatters.gofmt') },
-    sh = {
-      {
-        formatCommand = 'shfmt -i 0 -sr -',
-        formatStdin = true
-      },
-    },
-    yaml = {
-      {
-        formatCommand = 'yamlfmt -formatter retain_line_breaks=true,indentless_arrays=false -in',
-        formatStdin = true
-      }
-    },
-    typescript = { efmEslint },
-    javascript = { efmEslint },
-    typescriptreact = { efmEslint },
-    javascriptreact = { efmEslint },
-    json = { efmPrettier },
-    markdown = { efmPrettier },
-    html = { efmPrettier },
-    css = { efmPrettier },
   }
+
+  -- Format selection
+  vim.api.nvim_create_user_command('Format', function (args)
+    local range = nil
+    if args.count ~= -1 then
+      local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+      range = {
+        start = { args.line1, 0 },
+        ['end'] = { args.line2, end_line:len() },
+      }
+    end
+    require('conform').format({ async = true, lsp_format = 'fallback', range = range })
+  end, { range = true })
+
+  vim.api.nvim_create_user_command('FormatFile', function (args)
+    require('conform').format({ bufnr = args.buf, lsp_format = 'fallback' })
+  end, {})
+
+  require('lint').linters_by_ft = {
+    javascript = { 'eslint_d' },
+    javascriptreact = { 'eslint_d' },
+    python = { 'flake8' },
+    typescript = { 'eslint_d' },
+    typescriptreact = { 'eslint_d' }
+  }
+
+  vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter' }, {
+    callback = function ()
+      -- try_lint without arguments runs the linters defined in `linters_by_ft`
+      -- for the current filetype
+      require('lint').try_lint()
+    end,
+  })
+
+  local mason_registry = require('mason-registry')
+  local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() ..
+      '/node_modules/@vue/language-server'
 
   -- Enable the following language servers
   local servers = {
-    -- https://github.com/creativenull/efmls-configs-nvim
-    efm = {
-      init_options = { documentFormatting = true },
-      settings = {
-        rootMarkers = { '.git/', '.gitignore' },
-        languages = efmLanguages
-      },
-      filetypes = vim.tbl_keys(efmLanguages)
-    },
     clangd = {
       cmd = {
         -- 'xcrun',
         'clangd',
-        '--query-driver=/opt/homebrew/bin/*gcc'
+        '--query-driver=/opt/homebrew/bin/*gcc',
+        '--query-driver=~/.local/opt/zephyr-sdk-0.16.8/arm-zephyr-eabi/bin/arm-zephyr-eabi-*'
       }
     },
     gopls = {},
@@ -119,18 +126,40 @@ M.servers = function ()
       },
     },
     bashls = {},
-    ts_ls = {},
+    ts_ls = {
+      init_options = {
+        plugins = {
+          {
+            name = '@vue/typescript-plugin',
+            location = vue_language_server_path,
+            languages = { 'vue' },
+          },
+        },
+      },
+      filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+    },
     zls = {},
     cssls = {},
     taplo = {},
     jsonnet_ls = {},
     cmake = {},
-    -- sourcekit = {
-    --   root_dir = require('lspconfig').util.root_pattern('buildServer.json', '*.xcodeproj', '*.xcworkspace',
-    --     'compile_commands.json', 'Package.swift', '.git', '.clang-format', '.clangd'),
-    --   single_file_support = true
-    -- }
+    csharp_ls = {},
+    volar = {}
   }
+
+  if 0 == 1 then
+    servers.clangd = nil
+    servers.sourcekit = {
+      root_dir = require('lspconfig').util.root_pattern('buildServer.json', '*.xcodeproj', '*.xcworkspace',
+        'compile_commands.json', 'Package.swift', '.git', '.clang-format', '.clangd'),
+      single_file_support = true,
+      cmd = {
+        'sourcekit-lsp',
+        '-Xclangd',
+        '--query-driver=/opt/homebrew/bin/*gcc'
+      }
+    }
+  end
 
   if vim.fn.filereadable(vim.loop.cwd() .. '/tools/gopackagesdriver.sh') == 1 then
     -- if true then

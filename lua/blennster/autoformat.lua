@@ -17,6 +17,6 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     end
 
     -- Lsp config will setup formatting via :Format command and
-    vim.cmd [[Format]]
+    vim.cmd [[FormatFile]]
   end,
 })

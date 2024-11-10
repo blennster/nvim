@@ -6,6 +6,12 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.augroup = vim.api.nvim_create_augroup('blennster', { clear = true })
+vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+vim.diagnostic.config {
+  float = {
+    source = true,
+  }
+}
 
 vim.api.nvim_create_user_command('LspLogClear', function ()
   os.remove(require('vim.lsp.log').get_filename())

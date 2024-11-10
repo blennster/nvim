@@ -6,10 +6,9 @@ return {
     event = { 'BufReadPre', 'BufNewFile', 'InsertEnter' },
     dependencies = {
       -- Useful status updates for LSP
-      { 'j-hui/fidget.nvim',               event = 'LspAttach', tag = 'legacy',    opts = {} },
-      { 'creativenull/efmls-configs-nvim', event = 'LspAttach', version = 'v1.x.x' },
+      { 'j-hui/fidget.nvim',  event = 'LspAttach', tag = 'legacy', opts = {} },
       -- Additional lua configuration, makes nvim stuff amazing!
-      { 'folke/lazydev.nvim',              ft = 'lua',          opts = {} },
+      { 'folke/lazydev.nvim', ft = 'lua',          opts = {} },
       'b0o/schemastore.nvim',
       {
         'SmiteshP/nvim-navic',
@@ -21,7 +20,9 @@ return {
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'hrsh7th/cmp-nvim-lsp-signature-help' },
       { 'p00f/clangd_extensions.nvim',        opts = {} },
-      { 'SmiteshP/nvim-navbuddy' }
+      { 'SmiteshP/nvim-navbuddy' },
+      { 'stevearc/conform.nvim',              opts = {} },
+      { 'mfussenegger/nvim-lint' },
     },
     opts = {
       inlay_hints = true
