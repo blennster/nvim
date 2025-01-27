@@ -13,6 +13,10 @@ vim.diagnostic.config {
   }
 }
 
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.wo.foldlevel = 99
+
 vim.api.nvim_create_user_command('LspLogClear', function ()
   os.remove(require('vim.lsp.log').get_filename())
   print('Cleaned lsp logs')
@@ -65,7 +69,7 @@ require('lazy').setup({
   require 'blennster.treesitter',
   require 'blennster.dap',
   require 'blennster.remote',
-  require 'blennster.ai'
+  -- require 'blennster.ai'
 }, {})
 
 require 'blennster.keymaps'

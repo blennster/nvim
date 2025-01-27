@@ -177,14 +177,16 @@ vim.api.nvim_create_user_command('FzfBind',
     -- See `:help telescope.builtin`
     map('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
     map('n', '<leader>sb', builtin.buffers, { desc = '[s]earch [b]uffers' })
-
-    map('n', '<leader>sg', builtin.files, { desc = '[s]earch files (non git)' })
-    map('n', '<leader>sf', function ()
+    local git_file_search = function ()
       if builtin.git_files() then
       else
         builtin.files()
       end
-    end, { desc = '[s]earch [f]iles (git)' })
+    end
+
+    map('n', 'ff', git_file_search, { desc = 'search [f]iles (git)' })
+    map('n', '<leader>sf', git_file_search, { desc = '[s]earch [f]iles (git)' })
+    map('n', '<leader>sg', builtin.files, { desc = '[s]earch files (non git)' })
     -- map('n', '<leader>sF', function ()
     --   builtin.find_files { cwd = require('telescope.utils').buffer_dir() }
     -- end, { desc = '[s]earch [F]iles (from here)' })
@@ -193,6 +195,8 @@ vim.api.nvim_create_user_command('FzfBind',
     map('n', '<leader>st', builtin.live_grep, { desc = '[s]earch [t]ext' })
     map('n', '<leader>sk', builtin.keymaps, { desc = '[s]earch [k]eymaps' })
     map('n', '<leader>sT', builtin.lgrep_curbuf, { desc = '[s]earch [T]ext in current buffer' })
+
+    map('n', '<leader>sc', '<cmd>TodoFzfLua<cr>', { desc = 'Search todos' })
   end, {})
 
 

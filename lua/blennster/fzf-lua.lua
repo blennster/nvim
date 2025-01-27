@@ -1,5 +1,8 @@
 return {
   'ibhagwan/fzf-lua',
+  dependencies = {
+    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+  },
   event = 'VimEnter',
   config = function ()
     local fzflua = require('fzf-lua')
@@ -17,7 +20,7 @@ return {
           ['<M-S-up>']   = 'preview-up',
         },
       },
-      fzf_colors = true
+      fzf_colors = true,
     }
     fzflua.register_ui_select()
 
