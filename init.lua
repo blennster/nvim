@@ -54,6 +54,10 @@ require('lazy').setup({
     priority = 1000,
     init = function ()
       vim.cmd.colorscheme 'ayu-mirage'
+      -- gray deprecated
+      vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { bg = 'NONE', strikethrough = true, fg = '#808080' })
+      -- pink
+      vim.api.nvim_set_hl(0, 'CmpItemKindVariable', { bg = 'NONE', fg = '#e678ef' })
     end,
   },
 
@@ -61,7 +65,8 @@ require('lazy').setup({
   -- require 'blennster.telescope',
   require 'blennster.fzf-lua',
 
-  require 'blennster.completions',
+  require 'blennster.completions_blink',
+  -- require 'blennster.completions',
   require 'blennster.editor',
   require 'blennster.ui',
 
