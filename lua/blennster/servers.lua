@@ -62,7 +62,6 @@ M.servers = function ()
         -- 'xcrun',
         'clangd',
         '--query-driver=/opt/homebrew/bin/*gcc',
-        '--query-driver=~/.local/opt/zephyr-sdk-0.16.8/arm-zephyr-eabi/bin/arm-zephyr-eabi-*'
       }
     },
     gopls = {},
