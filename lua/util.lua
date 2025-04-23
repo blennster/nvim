@@ -1,5 +1,27 @@
 local M = {}
 
+vim.api.nvim_create_user_command('ToHex', function (opts)
+  local n = tonumber(opts.args)
+  if n ~= nil then
+    local s = string.format('0x%x', n)
+    print(string.format("Hex: %s (stored in 'a' register)", s))
+    vim.fn.setreg('a', s)
+  else
+    print('not a number')
+  end
+end, { nargs = 1 })
+
+vim.api.nvim_create_user_command('ToInt', function (opts)
+  local n = tonumber(opts.args, 16)
+  if n ~= nil then
+    local s = string.format('%d', n)
+    print(string.format("Int: %s (stored in 'a' register)", s))
+    vim.fn.setreg('a', s)
+  else
+    print('not a number')
+  end
+end, { nargs = 1 })
+
 M.root_patterns = { '.git', 'lua', '.gitignore' }
 
 -- returns the root directory based on:
