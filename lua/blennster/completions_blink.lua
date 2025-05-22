@@ -12,9 +12,9 @@ return {
           return vim.fn.executable 'make' == 1
         end,
       },
-      -- 'saadparwaiz1/cmp_luasnip',
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
+      'mgalliou/blink-cmp-tmux',
     },
     -- use a release tag to download pre-built binaries
     version = '1.*',
@@ -67,14 +67,14 @@ return {
           auto_show = true,
           auto_show_delay_ms = 100,
           -- Add pretty hover
-          draw = function (opts)
-            if opts.item and opts.item.documentation then
-              local out = require('pretty_hover.parser').parse(opts.item.documentation.value)
-              opts.item.documentation.value = out:string()
-            end
-
-            opts.default_implementation(opts)
-          end,
+          -- draw = function (opts)
+          --   if opts.item and opts.item.documentation then
+          --     local out = require('pretty_hover.parser').parse(opts.item.documentation.value)
+          --     opts.item.documentation.value = out:string()
+          --   end
+          --
+          --   opts.default_implementation(opts)
+          -- end,
           window = {
             border = 'rounded',
           },
@@ -97,6 +97,21 @@ return {
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          tmux = {
+            module = 'blink-cmp-tmux',
+            name = 'tmux',
+            -- default options
+            opts = {
+              all_panes = true,
+              capture_history = false,
+              -- only suggest completions from `tmux` if the `trigger_chars` are
+              -- used
+              triggered_only = false,
+              trigger_chars = { '.' }
+            },
+          },
+        },
       },
 
       -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
@@ -147,10 +162,13 @@ return {
     },
     config = function ()
       local lspconfig = require('lspconfig')
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_extend('keep', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
+      local capabilities = require('blink.cmp').get_lsp_capabilities({}, true)
+      vim.diagnostic.config({
+        virtual_text = {}
+      })
+      -- vim.lsp.inlay_hint.enable(true)
       capabilities.textDocument.completion.completionItem.snippetSupport = true
-      capabilities.workspace.didChangeWatchedFiles.dynamicRegistraton = true
+      capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
       local servers = require('blennster.servers').servers()
 
@@ -178,12 +196,12 @@ return {
       })
     end,
   },
-  {
-    'Fildo7525/pretty_hover',
-    tag = 'v2.0.1',
-    event = 'LspAttach',
-    opts = {}
-  },
+  -- {
+  --   'Fildo7525/pretty_hover',
+  --   -- tag = 'v2.0.1',
+  --   event = 'LspAttach',
+  --   opts = {}
+  -- },
   -- {
   --   'Exafunction/codeium.vim',
   --   config = function ()

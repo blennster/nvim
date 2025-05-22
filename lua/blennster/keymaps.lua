@@ -232,8 +232,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     lspmap('n', '<leader>so', builtin.lsp_outgoing_calls,
       '[S]earch [o]utgoing calls')
 
-    lspmap('n', '<leader>cs', vim.lsp.buf.signature_help, 'Show [S]ignature help')
-    lspmap('i', '<C-j>', vim.lsp.buf.signature_help, 'Show Signature help')
+    lspmap('n', '<leader>cs', function () vim.lsp.buf.signature_help { border = 'rounded' } end, 'Show [S]ignature help')
+    lspmap('i', '<C-j>', function () vim.lsp.buf.signature_help { border = 'rounded' } end, 'Show Signature help')
 
     lspmap('n', '<leader>ci', function ()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
@@ -248,8 +248,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     lspmap('n', '<leader>sD', builtin.lsp_workspace_diagnostics, '[s]earch workspace [d]iagnostics')
 
     -- See `:help K` for why this keymap
-    -- lspmap('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
-    lspmap('n', 'K', require('pretty_hover').hover, 'Hover Documentation')
+    lspmap('n', 'K', function () vim.lsp.buf.hover { border = 'rounded' } end, 'Hover Documentation')
+    -- lspmap('n', 'K', require('pretty_hover').hover, 'Hover Documentation')
 
     -- Lesser used LSP functionality
     lspmap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
