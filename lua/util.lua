@@ -1,5 +1,16 @@
 local M = {}
 
+vim.api.nvim_create_user_command('Whitesmiths', function (opts)
+  -- Whitesmiths indent style for C/C++
+  -- vim.opt.expandtab  = true
+  -- vim.opt.tabstop     = 2
+  -- vim.opt.shiftwidth  = 2
+  -- vim.opt.softtabstop = 2
+
+  vim.opt.cindent    = true
+  -- prepend the `{` rule, then the `}` rule
+  vim.opt.cinoptions = '{1s,}0s'
+end, { nargs = 0 })
 vim.api.nvim_create_user_command('ToHex', function (opts)
   local n = tonumber(opts.args)
   if n ~= nil then
