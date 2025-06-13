@@ -306,9 +306,9 @@ vim.api.nvim_create_user_command('GitsignsAttach',
   function (opts)
     local bufnr = tonumber(opts.args)
     local gitsigns = require('gitsigns')
-    map('n', '<leader>gp', gitsigns.prev_hunk,
+    map('n', '<leader>gp', function () gitsigns.nav_hunk('prev') end,
       { buffer = bufnr, desc = '[g]it goto [p]revious Hunk' })
-    map('n', '<leader>gn', gitsigns.next_hunk,
+    map('n', '<leader>gn', function () gitsigns.nav_hunk('next') end,
       { buffer = bufnr, desc = '[g]it goto [n]ext Hunk' })
     map('n', '<leader>gk', gitsigns.preview_hunk,
       { buffer = bufnr, desc = '[g]it preview hun[k]' })
@@ -324,8 +324,6 @@ vim.api.nvim_create_user_command('GitsignsAttach',
       { buffer = bufnr, desc = '[g]it [r]eset hunk' })
     map('n', '<leader>gs', gitsigns.stage_hunk,
       { buffer = bufnr, desc = '[g]it [s]tage' })
-    map('n', '<leader>gu', gitsigns.undo_stage_hunk,
-      { buffer = bufnr, desc = '[g]it [u]nstage' })
     map('n', '<leader>gl', gitsigns.blame_line,
       { buffer = bufnr, desc = '[g]it blame [l]ine' })
   end
@@ -338,8 +336,8 @@ map('n', '<leader>u', function ()
 end, { desc = '[u]ndotree' })
 
 map('n', '<leader>a', function ()
-  vim.cmd [[ ChatGPT ]]
-end, { desc = 'Toggle Chat' })
+  vim.cmd [[ CodeCompanionChat toggle ]]
+end, { desc = 'Toggle CodeCompanion' })
 
 -- Fix terminal
 function _G.set_terminal_keymaps()

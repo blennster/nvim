@@ -75,12 +75,15 @@ require('lazy').setup({
   require 'blennster.dap',
   require 'blennster.remote',
   -- require 'blennster.ai'
+  require 'blennster.ai'
 }, {})
 
 require 'blennster.keymaps'
 require 'blennster.autocmds'
 require 'blennster.autoformat'
 
+-- Turn of LSP logging by default
+vim.lsp.set_log_level('off')
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 et:
