@@ -53,5 +53,33 @@
       ""
     ],
     "description": "SVEP C file"
+  },
+  "minmax macros": {
+    "prefix": "minmax",
+    "body": [
+      "#define MIN(a, b) \\",
+      "    (((a) < (b)) ? (a) : (b))",
+      "",
+      "#define MAX(a, b) \\",
+      "    (((a) > (b)) ? (a) : (b))"
+    ],
+    "description": "Generate MIN and MAX macros"
+  },
+  "minmax macros (type-safe)": {
+    "prefix": "minmax_type",
+    "body": [
+      "#define MIN(a,b) ({ \\",
+      "    typeof(a) _a = (a); \\",
+      "    typeof(b) _b = (b); \\",
+      "    _a < _b ? _a : _b; \\",
+      "})",
+      "",
+      "#define MAX(a,b) ({ \\",
+      "    typeof(a) _a = (a); \\",
+      "    typeof(b) _b = (b); \\",
+      "    _a > _b ? _a : _b; \\",
+      "})"
+    ],
+    "description": "Type-safe MIN/MAX using GCC typeof"
   }
 }

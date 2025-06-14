@@ -8,6 +8,12 @@
           "cpp"
         ],
         "path": "./c.json"
+      },
+      {
+        "language": [
+          "yaml"
+        ],
+        "path": "./yaml.json"
       }
     ]
   }

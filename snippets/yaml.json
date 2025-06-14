@@ -1,0 +1,26 @@
+{
+  "Zephyr clangd file": {
+    "prefix": "zclangd",
+    "body": [
+      "CompileFlags:",
+      "  Add:",
+      "    - -ferror-limit=0",
+      "    - -Wno-unknown-warning-option",
+      "    - -std=gnu11",
+      "    - Werror",
+      "  Remove:",
+      "    - -mfp16-format=ieee",
+      "    - -fno-reorder-functions",
+      "    - -fno-printf-return-value",
+      "Diagnostics:",
+      "  UnusedIncludes: Strict",
+      "  Suppress:",
+      "    - drv_unknown_argument",
+      "    - gnu-zero-variadic-macro-arguments",
+      "    - gnu-statement-expression-from-macro-expansion",
+      "    - gnu-auto-type",
+      "    - c2x-extensions"
+    ],
+    "description": "Zephyr clangd config"
+  }
+}
