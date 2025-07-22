@@ -43,16 +43,16 @@ return {
         ['<C-l>'] = { 'snippet_forward', 'fallback' },
         ['<C-h>'] = { 'snippet_backward', 'fallback' },
       },
-      cmdline = {
-        keymap = {
-          preset = 'super-tab'
-        },
-        completion = {
-          menu = {
-            auto_show = true
-          }
-        }
-      },
+      -- cmdline = {
+      --   keymap = {
+      --     preset = 'super-tab'
+      --   },
+      --   completion = {
+      --     menu = {
+      --       auto_show = true
+      --     }
+      --   }
+      -- },
       signature = { enabled = true, window = { border = 'rounded', show_documentation = true } },
       -- snippets = { preset = 'luasnip' },
 
