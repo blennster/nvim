@@ -70,7 +70,8 @@ require('lazy').setup({
   require 'blennster.editor',
   require 'blennster.ui',
 
-  require 'blennster.neotree',
+  -- require 'blennster.neotree',
+  require 'blennster.mini_files',
   require 'blennster.treesitter',
   require 'blennster.dap',
   require 'blennster.remote',
