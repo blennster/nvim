@@ -141,7 +141,10 @@ M.servers = function ()
     taplo = {},
     jsonnet_ls = {},
     cmake = {},
-    csharp_ls = {},
+    omnisharp = {
+      cmd = { vim.fn.stdpath 'data' .. '/mason/bin/OmniSharp' }
+    },
+
     vue_ls = {}
   }
 
