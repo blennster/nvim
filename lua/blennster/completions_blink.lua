@@ -164,7 +164,6 @@ return {
       inlay_hints = true
     },
     config = function ()
-      local lspconfig = require('lspconfig')
       local capabilities = require('blink.cmp').get_lsp_capabilities({}, true)
       vim.diagnostic.config({
         virtual_text = {}
@@ -177,9 +176,10 @@ return {
 
       -- configure servers
       for server, conf in pairs(servers) do
-        lspconfig[server].setup(vim.tbl_extend('keep', conf, {
+        vim.lsp.config(server, vim.tbl_extend('keep', conf, {
           capabilities = capabilities,
         }))
+        vim.lsp.enable(server)
       end
 
       vim.api.nvim_create_autocmd('LspAttach', {

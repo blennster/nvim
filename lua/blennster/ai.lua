@@ -7,18 +7,20 @@ return {
 
     require('codecompanion').setup({
       adapters = {
-        openai = function ()
-          return require('codecompanion.adapters').extend('openai', {
-            env = {
-              api_key = 'cmd: pass Svep/openai'
-            },
-            schema = {
-              model = {
-                default = 'o4-mini-2025-04-16'
+        http = {
+          openai = function ()
+            return require('codecompanion.adapters').extend('openai', {
+              env = {
+                api_key = 'cmd: pass Svep/openai'
+              },
+              schema = {
+                model = {
+                  default = 'o4-mini-2025-04-16'
+                }
               }
-            }
-          })
-        end
+            })
+          end
+        }
       },
       strategies = {
         chat = {

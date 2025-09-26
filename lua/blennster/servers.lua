@@ -142,7 +142,7 @@ M.servers = function ()
     jsonnet_ls = {},
     cmake = {},
     csharp_ls = {},
-    volar = {}
+    vue_ls = {}
   }
 
   if 0 == 1 then
