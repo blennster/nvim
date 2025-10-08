@@ -11,6 +11,11 @@ return {
         cond = function ()
           return vim.fn.executable 'make' == 1
         end,
+        config = function ()
+          -- Load all snippets
+          require('luasnip.loaders.from_vscode').lazy_load()
+          require('luasnip.loaders.from_vscode').lazy_load { paths = { './snippets' } }
+        end
       },
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
@@ -54,7 +59,7 @@ return {
       --   }
       -- },
       signature = { enabled = true, window = { border = 'rounded', show_documentation = true } },
-      -- snippets = { preset = 'luasnip' },
+      snippets = { preset = 'luasnip' },
 
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
