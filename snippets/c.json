@@ -47,9 +47,9 @@
       "",
       "/**** Data ****/",
       "",
-      "/**** Public functions ****/",
-      "",
       "/**** Private functions ****/",
+      "",
+      "/**** Public functions ****/",
       ""
     ],
     "description": "SVEP C file"

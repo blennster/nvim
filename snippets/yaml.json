@@ -22,5 +22,10 @@
       "    - c2x-extensions"
     ],
     "description": "Zephyr clangd config"
+  },
+  "Clang-format": {
+    "prefix": "clang-format",
+    "body": ["BasedOnStyle: LLVM", "PointerAlignment: Right", "IndentWidth: 4"],
+    "description": "Zephyr clangd config"
   }
 }
