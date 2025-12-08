@@ -4,7 +4,7 @@ M.servers = function ()
   require('conform').setup {
     formatters_by_ft = {
       -- Conform will run multiple formatters sequentially
-      python = { 'autopep8' },
+      python = { 'ruff_format' },
       -- You can customize some of the format options for the filetype (:help conform.format)
       rust = { 'rustfmt' },
       -- Conform will run the first available formatter
@@ -38,7 +38,7 @@ M.servers = function ()
   require('lint').linters_by_ft = {
     javascript = { 'eslint_d' },
     javascriptreact = { 'eslint_d' },
-    python = { 'flake8' },
+    python = { 'ruff' },
     typescript = { 'eslint_d' },
     typescriptreact = { 'eslint_d' }
   }
