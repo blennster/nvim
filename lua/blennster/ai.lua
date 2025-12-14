@@ -1,7 +1,7 @@
 return {
   'NickvanDyke/opencode.nvim',
   dependencies = {
-    { 'folke/snacks.nvim', opts = { input = {}, picker = {}, terminal = {} } },
+    { 'folke/snacks.nvim', opts = { terminal = {} } },
   },
   config = function ()
     ---@type opencode.Opts
@@ -14,29 +14,40 @@ return {
     -- Required for automatic buffer reload when opencode edits files
     vim.o.autoread = true
 
+    -- Cache frequently used functions
+    local set = vim.keymap.set
+    local api = vim.api
+
+    -- Lazy-load opencode module on first use
+    local function oc()
+      return require('opencode')
+    end
+
     -- Keymaps with <leader>o prefix
-    vim.keymap.set({ 'n', 'x' }, '<leader>oa', function () require('opencode').ask('@this: ', { submit = true }) end,
-      { desc = 'Ask opencode' })
-    vim.keymap.set({ 'n', 'x' }, '<leader>os', function () require('opencode').select() end,
-      { desc = 'Select opencode action…' })
-    vim.keymap.set({ 'n', 'x' }, '<leader>op', function () require('opencode').prompt('@this') end,
-      { desc = 'Add to opencode prompt' })
+    set({ 'n', 'x' }, '<leader>oa', function () oc().ask('@buffer: ', { submit = true }) end, { desc = 'Ask opencode' })
+    set({ 'n', 'x' }, '<leader>oA', function () oc().ask('@this: ', { submit = true }) end, { desc = 'Ask opencode' })
+    set({ 'n', 'x' }, '<leader>oc', function () oc().prompt('@this: complete this code', { submit = true }) end,
+      { desc = 'Complete code' })
+    set({ 'n', 'x' }, '<leader>os', function () oc().select() end, { desc = 'Select opencode action' })
+    set({ 'n', 'x' }, '<leader>op', function () oc().ask('', { submit = true }) end, { desc = 'Prompt' })
+
     local function toggle_and_focus()
-      local opencode = require('opencode')
-      opencode.toggle()
+      oc().toggle()
+
+      -- Search all open windows to find the opencode window
       vim.schedule(function ()
-        -- Find the opencode terminal buffer and focus its window
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
-          local buf = vim.api.nvim_win_get_buf(win)
-          local bufname = vim.api.nvim_buf_get_name(buf)
-          if bufname:match('opencode') then
-            vim.api.nvim_set_current_win(win)
+        for _, win in ipairs(api.nvim_list_wins()) do
+          local buf = api.nvim_win_get_buf(win)
+          local name = api.nvim_buf_get_name(buf)
+          if name:match('opencode') then
+            api.nvim_set_current_win(win)
             return
           end
         end
       end)
     end
-    vim.keymap.set({ 'n', 't' }, '<leader>oo', toggle_and_focus, { desc = 'Toggle opencode' })
-    vim.keymap.set({ 'n', 't' }, '<C-l>', toggle_and_focus, { desc = 'Toggle opencode' })
+
+    set({ 'n', 't' }, '<leader>oo', toggle_and_focus, { desc = 'Toggle opencode' })
+    set({ 'n', 't', 'i' }, '<C-l>', toggle_and_focus, { desc = 'Toggle opencode' })
   end,
 }
