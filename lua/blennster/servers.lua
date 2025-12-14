@@ -58,9 +58,8 @@ M.servers = function ()
   local servers = {
     clangd = {
       cmd = {
-        -- 'xcrun',
         'clangd',
-        '--query-driver=/opt/homebrew/bin/*gcc',
+        '--query-driver=/opt/**/*gcc',
       }
     },
     gopls = {},
