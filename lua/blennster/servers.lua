@@ -54,12 +54,20 @@ M.servers = function ()
   local mason_registry = require('mason-registry')
   local vue_language_server_path = vim.fn.expand '$MASON/packages/vue-language-server/node_modules/@vue/language-server'
 
+  local clangd_bin = 'clangd'
+  if jit.os == 'OSX' then
+    clangd_bin = '/opt/homebrew/opt/llvm/bin/clangd'
+  end
+  local home = os.getenv('HOME')
+
   -- Enable the following language servers
   local servers = {
     clangd = {
       cmd = {
-        'clangd',
-        '--query-driver=/opt/**/*gcc',
+        clangd_bin,
+        '--query-driver=/opt/nordic/**gcc',
+        '--query-driver=/opt/zephyr-sdk/*gcc',
+        '--query-driver=' .. home .. '/.local/opt/**/*gcc'
       }
     },
     gopls = {},
