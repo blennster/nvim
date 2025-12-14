@@ -9,7 +9,8 @@ return {
         reset = ','
       },
       windows = {
-        preview = true
+        preview = true,
+        width_focus = 100
       }
     }
   },

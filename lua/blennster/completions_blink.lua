@@ -146,8 +146,13 @@ return {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre', 'BufNewFile', 'InsertEnter' },
     dependencies = {
+      {
+        'folke/snacks.nvim',
+        -- Input at cursor for rename
+        opts = { input = { win = { relative = 'cursor', row = 1, col = 0 } } }
+      },
       -- Useful status updates for LSP
-      { 'j-hui/fidget.nvim',  event = 'LspAttach', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim',  event = 'LspAttach', opts = {} },
       -- Additional lua configuration, makes nvim stuff amazing!
       { 'folke/lazydev.nvim', ft = 'lua',          opts = {} },
       'b0o/schemastore.nvim',
@@ -204,21 +209,4 @@ return {
       })
     end,
   },
-  -- {
-  --   'Fildo7525/pretty_hover',
-  --   -- tag = 'v2.0.1',
-  --   event = 'LspAttach',
-  --   opts = {}
-  -- },
-  -- {
-  --   'Exafunction/codeium.vim',
-  --   config = function ()
-  --     vim.g.codeium_no_map_tab = false
-  --     vim.g.codeium_enabled = false
-  --
-  --     vim.keymap.set('i', '<C-g>', function ()
-  --       return vim.fn['codeium#Accept']()
-  --     end, { expr = true })
-  --   end,
-  -- },
 }
