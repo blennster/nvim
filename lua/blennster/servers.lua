@@ -65,8 +65,8 @@ M.servers = function ()
     clangd = {
       cmd = {
         clangd_bin,
-        '--query-driver=/opt/nordic/**gcc',
-        '--query-driver=/opt/zephyr-sdk/*gcc',
+        '--query-driver=/opt/nordic/**/*gcc',
+        '--query-driver=/opt/zephyr-sdk/**/*gcc',
         '--query-driver=' .. home .. '/.local/opt/**/*gcc'
       }
     },
