@@ -14,7 +14,7 @@ M.servers = function ()
       html = { 'prettierd', 'prettier', stop_after_first = true },
       css = { 'prettierd', 'prettier', stop_after_first = true },
       markdown = { 'prettierd', 'prettier', stop_after_first = true },
-      yaml = { 'yamlfmt' }
+      yaml = { 'yamlfmt -formatter retain_line_breaks=true' }
     },
   }
 
@@ -145,7 +145,8 @@ M.servers = function ()
       cmd = { vim.fn.stdpath 'data' .. '/mason/bin/OmniSharp' }
     },
 
-    vue_ls = {}
+    vue_ls = {},
+    harper_ls = {},
   }
 
   if 0 == 1 then
