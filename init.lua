@@ -43,22 +43,11 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   {
-    'folke/tokyonight.nvim',
-    priority = 1000,
-    init = function ()
-      -- vim.cmd.colorscheme 'tokyonight-storm'
-    end,
-  },
-  {
-    'Shatur/neovim-ayu',
-    priority = 1000,
-    init = function ()
-      vim.cmd.colorscheme 'ayu-mirage'
-      -- gray deprecated
-      vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { bg = 'NONE', strikethrough = true, fg = '#808080' })
-      -- pink
-      vim.api.nvim_set_hl(0, 'CmpItemKindVariable', { bg = 'NONE', fg = '#e678ef' })
-    end,
+    'rose-pine/neovim',
+    name = 'rose-pine',
+    config = function ()
+      vim.cmd.colorscheme 'rose-pine'
+    end
   },
 
   require 'blennster.git',
