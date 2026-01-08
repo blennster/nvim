@@ -46,7 +46,13 @@ require('lazy').setup({
     'rose-pine/neovim',
     name = 'rose-pine',
     config = function ()
-      vim.cmd.colorscheme 'rose-pine'
+      require('rose-pine').setup({
+        highlight_groups = {
+          StorageClass = { link = '@keyword' }, -- Static should be a keyword
+        },
+      })
+
+      vim.cmd.colorscheme 'rose-pine-moon'
     end
   },
 
