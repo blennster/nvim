@@ -169,15 +169,30 @@ return {
       { 'SmiteshP/nvim-navbuddy' },
       { 'stevearc/conform.nvim',       opts = {} },
       { 'mfussenegger/nvim-lint' },
+      {
+        'rachartier/tiny-inline-diagnostic.nvim',
+        event = 'VeryLazy',
+        priority = 1000,
+        config = function ()
+          require('tiny-inline-diagnostic').setup({
+            options = {
+              add_messages = {
+                display_count = true,
+              },
+              multilines = {
+                enabled = true,
+              },
+            },
+          })
+          vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
+        end,
+      }
     },
     opts = {
       inlay_hints = true
     },
     config = function ()
       local capabilities = require('blink.cmp').get_lsp_capabilities({}, true)
-      vim.diagnostic.config({
-        virtual_text = {}
-      })
       -- vim.lsp.inlay_hint.enable(true)
       capabilities.textDocument.completion.completionItem.snippetSupport = true
       capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
