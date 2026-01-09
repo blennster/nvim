@@ -1,13 +1,14 @@
 return {
   -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
+  branch = 'master',
   dependencies = {
     -- 'nvim-treesitter/nvim-treesitter-textobjects',
     'HiPhish/rainbow-delimiters.nvim'
   },
   build = ':TSUpdate',
   config = function ()
-    require('nvim-treesitter').setup {
+    require('nvim-treesitter.configs').setup {
       -- Add languages to be installed here that you want installed for treesitter
       ensure_installed = { 'c', 'lua', 'vimdoc', 'vim', 'bash', 'markdown', 'markdown_inline', 'regex', 'yaml' },
 

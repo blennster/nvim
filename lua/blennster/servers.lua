@@ -153,7 +153,9 @@ M.servers = function ()
     },
 
     vue_ls = {},
-    harper_ls = {},
+    harper_ls = {
+      filetypes = { 'markdown' }
+    },
   }
 
   if 0 == 1 then

@@ -351,9 +351,9 @@ map('n', '<leader>u', function ()
   vim.cmd [[UndotreeFocus]]
 end, { desc = '[u]ndotree' })
 
-map('n', '<leader>a', function ()
-  vim.cmd [[ CodeCompanionChat toggle ]]
-end, { desc = 'Toggle CodeCompanion' })
+-- map('n', '<leader>a', function ()
+--   vim.cmd [[ CodeCompanionChat toggle ]]
+-- end, { desc = 'Toggle CodeCompanion' })
 
 -- Fix terminal
 function _G.set_terminal_keymaps()
