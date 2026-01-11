@@ -3,6 +3,8 @@ return {
     'saghen/blink.cmp',
     -- optional: provides snippets for the snippet source
     dependencies = {
+      -- Compatibility layer for nvim-cmp sources (used by avante)
+      { 'saghen/blink.compat', version = '*', opts = {} },
       -- Snippet Engine & its associated nvim-cmp source
       {
         'L3MON4D3/LuaSnip',
@@ -105,7 +107,22 @@ return {
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
+        per_filetype = {
+          AvanteInput = { 'avante_commands', 'avante_mentions' },
+        },
         providers = {
+          avante_commands = {
+            name = 'avante_commands',
+            module = 'blink.compat.source',
+            score_offset = 90,
+            opts = {},
+          },
+          avante_mentions = {
+            name = 'avante_mentions',
+            module = 'blink.compat.source',
+            score_offset = 1000,
+            opts = {},
+          },
           tmux = {
             module = 'blink-cmp-tmux',
             name = 'tmux',
