@@ -70,8 +70,7 @@ require('lazy').setup({
   require 'blennster.treesitter',
   require 'blennster.dap',
   require 'blennster.remote',
-  -- require 'blennster.ai'
-  require 'blennster.ai'
+  require 'blennster.opencode'
 }, {})
 
 require 'blennster.keymaps'

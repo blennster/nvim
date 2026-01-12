@@ -8,7 +8,7 @@ return {
   event = 'VeryLazy',
   version = false, -- Never set this value to "*"! Never!
   keys = {
-    { '<C-l>', '<cmd>AvanteToggle<cr>', desc = 'Toggle Avante' },
+    { '<C-l>', '<esc><cmd>AvanteToggle<cr>', desc = 'Toggle Avante', mode = { 'i', 'n' } },
   },
   ---@module 'avante'
   ---@type avante.Config
@@ -17,10 +17,10 @@ return {
     -- this file can contain specific instructions for your project
     instructions_file = 'avante.md',
     -- for example
-    provider = 'claude-code',
+    provider = 'opencode',
     windows = {
       ask = {
-        start_insert = false, -- don't enter insert mode when toggling
+        -- start_insert = false, -- don't enter insert mode when toggling
       },
     },
   },
@@ -53,13 +53,5 @@ return {
     --     },
     --   },
     -- },
-    {
-      -- Make sure to set this up properly if you have lazy=true
-      'MeanderingProgrammer/render-markdown.nvim',
-      opts = {
-        file_types = { 'markdown', 'Avante' },
-      },
-      ft = { 'markdown', 'Avante' },
-    },
   },
 }
