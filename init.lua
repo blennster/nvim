@@ -57,15 +57,12 @@ require('lazy').setup({
   },
 
   require 'blennster.git',
-  -- require 'blennster.telescope',
   require 'blennster.fzf-lua',
 
   require 'blennster.completions_blink',
-  -- require 'blennster.completions',
   require 'blennster.editor',
   require 'blennster.ui',
 
-  -- require 'blennster.neotree',
   require 'blennster.mini_files',
   require 'blennster.treesitter',
   require 'blennster.dap',

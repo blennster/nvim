@@ -24,12 +24,6 @@ map({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- Move to window using the <ctrl> hjkl keys
--- map('n', '<C-h>', '<C-w>h', { desc = 'Go to left window', remap = true })
--- map('n', '<C-j>', '<C-w>j', { desc = 'Go to lower window', remap = true })
--- map('n', '<C-k>', '<C-w>k', { desc = 'Go to upper window', remap = true })
--- map('n', '<C-l>', '<C-w>l', { desc = 'Go to right window', remap = true })
-
 -- Resize window using <ctrl> arrow keys
 map('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase window height' })
 map('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease window height' })
@@ -55,7 +49,7 @@ end, { desc = 'Show hover' })
 -- [[ Netrw ]]
 if not has('neo-tree.nvim') then
   map('n', '<leader>e', function ()
-    local netrw_open = vim.api.nvim_buf_get_option_value(0, 'filetype') == 'netrw'
+    local netrw_open = vim.bo.filetype == 'netrw'
     if not netrw_open then
       vim.cmd [[Ex]]
     else
@@ -63,7 +57,7 @@ if not has('neo-tree.nvim') then
     end
   end, { desc = 'Toggle explorer' })
   map('n', '<leader>E', function ()
-    local netrw_open = vim.api.nvim_buf_get_option_value(0, 'filetype') == 'netrw'
+    local netrw_open = vim.bo.filetype == 'netrw'
     if not netrw_open then
       vim.cmd [[Ex .]]
     else
@@ -88,24 +82,14 @@ map('n', '<leader>E', function ()
   end
 end, { desc = 'Toggle explorer' })
 
--- buffers
-if has('bufferline.nvim') then
-  map('n', '<S-h>', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
-  map('n', '<S-l>', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next buffer' })
-  map('n', '[b', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
-  map('n', ']b', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next buffer' })
-  map('n', '<leader>b,', '<cmd>BufferLineMovePrev<cr>', { desc = 'Move left' })
-  map('n', '<leader>b.', '<cmd>BufferLineMoveNext<cr>', { desc = 'Move right' })
-else
-  map('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev buffer' })
-  map('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next buffer' })
-  map('n', '[b', '<cmd>bprevious<cr>', { desc = 'Prev buffer' })
-  map('n', ']b', '<cmd>bnext<cr>', { desc = 'Next buffer' })
-end
+map('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev buffer' })
+map('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next buffer' })
+map('n', '[b', '<cmd>bprevious<cr>', { desc = 'Prev buffer' })
+map('n', ']b', '<cmd>bnext<cr>', { desc = 'Next buffer' })
 
 map('n', '<leader>bb', '<cmd>e #<cr>', { desc = 'Switch to other buffer' })
 map('n', '<leader>bn', '<cmd>bnext<cr>', { desc = 'Switch to next buffer' })
-map('n', '<leader>bp', '<cmd>bprev<cr>', { desc = 'Switch to next buffer' })
+map('n', '<leader>bp', '<cmd>bprev<cr>', { desc = 'Switch to prev buffer' })
 map('n', '<leader>bd', '<cmd>bd<cr>', { desc = 'Delete buffer' })
 
 if has('harpoon') then
@@ -136,13 +120,6 @@ if has('harpoon') then
   end, { desc = 'goto fourth mark' })
 end
 
-if has('buffer_manager.nvim') then
-  map('n', '<leader><space>', require('buffer_manager.ui').toggle_quick_menu, { desc = 'Open buffer manager' })
-elseif false then
-  map('n', '<leader><space>', require('telescope.builtin').buffers, { desc = 'Search buffers' })
-end
-
-
 map('n', '<leader>h', '<cmd>noh<cr>', { desc = 'Clear highlights' })
 map('n', '<C-q>', function ()
   local windows = vim.fn.getwininfo()
@@ -166,25 +143,6 @@ require 'which-key'.add(
     { '<leader>s', group = 'search' },
   }
 )
-vim.api.nvim_create_user_command('TelescopeBind',
-  function ()
-    local builtin = require('telescope.builtin')
-
-    -- See `:help telescope.builtin`
-    map('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
-    map('n', '<leader>sb', builtin.buffers, { desc = '[s]earch [b]uffers' })
-
-    map('n', '<leader>sg', builtin.find_files, { desc = '[s]earch [f]iles (non git)' })
-    map('n', '<leader>sf', builtin.git_files, { desc = '[s]earch [f]iles (git)' })
-    map('n', '<leader>sF', function ()
-      builtin.find_files { cwd = require('telescope.utils').buffer_dir() }
-    end, { desc = '[s]earch [F]iles (from here)' })
-    map('n', '<leader>sh', builtin.help_tags, { desc = '[s]earch [h]elp' })
-    map('n', '<leader>sw', builtin.grep_string, { desc = '[s]earch current [w]ord' })
-    map('n', '<leader>st', builtin.live_grep, { desc = '[s]earch [t]ext' })
-    map('n', '<leader>sk', builtin.keymaps, { desc = '[s]earch [k]eymaps' })
-    map('n', '<leader>sT', builtin.current_buffer_fuzzy_find, { desc = '[s]earch [T]ext in current buffer' })
-  end, {})
 
 vim.api.nvim_create_user_command('FzfBind',
   function ()
@@ -214,6 +172,18 @@ vim.api.nvim_create_user_command('FzfBind',
 
     map('n', '<leader>sc', '<cmd>TodoFzfLua<cr>', { desc = 'Search todos' })
   end, {})
+
+-- Spectre - search and replace
+vim.api.nvim_create_user_command('Spectre', function (opts)
+  local args = opts.fargs
+  if #args == 0 then
+    require('spectre').open()
+  elseif args[1] == 'word' then
+    require('spectre').open_visual({ select_word = true })
+  elseif args[1] == 'file' then
+    require('spectre').open_file_search()
+  end
+end, { nargs = '*', desc = 'Spectre: :Spectre, :Spectre word, :Spectre file' })
 
 
 -- LSP bindings
@@ -350,10 +320,6 @@ map('n', '<leader>u', function ()
   vim.cmd [[UndotreeToggle]]
   vim.cmd [[UndotreeFocus]]
 end, { desc = '[u]ndotree' })
-
--- map('n', '<leader>a', function ()
---   vim.cmd [[ CodeCompanionChat toggle ]]
--- end, { desc = 'Toggle CodeCompanion' })
 
 -- Fix terminal
 function _G.set_terminal_keymaps()

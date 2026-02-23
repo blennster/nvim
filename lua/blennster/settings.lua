@@ -20,6 +20,13 @@ vim.o.breakindent = true
 
 -- Save undo history
 vim.o.undofile = true
+vim.o.undodir = vim.fn.stdpath('state') .. '/undo'
+
+-- Backup and shada
+vim.o.backup = true
+vim.o.backupdir = vim.fn.stdpath('state') .. '/backup'
+vim.o.writebackup = true
+vim.o.shadafile = vim.fn.stdpath('state') .. '/shada/main.shada'
 
 -- Case-insensitive searching UNLESS \C or capital in search
 vim.o.ignorecase = true
