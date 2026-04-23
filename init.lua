@@ -13,6 +13,7 @@ vim.diagnostic.config {
   }
 }
 
+
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.wo.foldlevel = 99
@@ -63,7 +64,7 @@ require('lazy').setup({
   require 'blennster.editor',
   require 'blennster.ui',
 
-  require 'blennster.mini_files',
+  require 'blennster.neotree',
   require 'blennster.treesitter',
   require 'blennster.dap',
   require 'blennster.remote',
@@ -75,7 +76,7 @@ require 'blennster.autocmds'
 require 'blennster.autoformat'
 
 -- Turn of LSP logging by default
-vim.lsp.set_log_level('off')
+-- vim.lsp.set_log_level('off')
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 et:

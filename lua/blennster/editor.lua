@@ -52,6 +52,6 @@ return {
   { 'akinsho/toggleterm.nvim',                  version = '*',                              opts = { --[[ things you want to change go here]] } },
   { 'folke/todo-comments.nvim',                 dependencies = { 'nvim-lua/plenary.nvim' }, opts = {} },
   { 'nvim-pack/nvim-spectre',                   opts = {} },
-  { 'keith/swift.vim' };
+  { 'keith/swift.vim' },
   { 'MeanderingProgrammer/render-markdown.nvim' }
 }

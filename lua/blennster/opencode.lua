@@ -29,9 +29,6 @@ return {
           require('snacks.terminal').toggle(opencode_cmd, snacks_terminal_opts)
         end,
       },
-      lsp = {
-        enabled = true
-      }
     }
 
     -- Required for automatic buffer reload when opencode edits files
@@ -53,6 +50,7 @@ return {
       { desc = 'Complete code' })
     set({ 'n', 'x' }, '<leader>os', function () oc().select() end, { desc = 'Select opencode action' })
     set({ 'n', 'x' }, '<leader>op', function () oc().ask('', { submit = true }) end, { desc = 'Prompt' })
+    set({ 'n', 'x' }, '<leader>oS', function () oc().command('session.interrupt') end, { desc = 'Interrupt' })
 
     local function toggle_and_focus()
       oc().toggle()

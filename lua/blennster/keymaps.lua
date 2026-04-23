@@ -66,21 +66,22 @@ if not has('neo-tree.nvim') then
   end, { desc = 'Toggle explorer' })
 end
 
-map('n', '<leader>e', function ()
-  if MiniFiles.get_explorer_state() == nil then
-    MiniFiles.open()
-  else
-    MiniFiles.close()
-  end
-end, { desc = 'Toggle explorer' })
+-- map('n', '<leader>e', function ()
+--   if MiniFiles.get_explorer_state() == nil then
+--     MiniFiles.open()
+--   else
+--     MiniFiles.close()
+--   end
+-- end, { desc = 'Toggle explorer' })
+--
+-- map('n', '<leader>E', function ()
+--   if MiniFiles.get_explorer_state() == nil then
+--     MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
+--   else
+--     MiniFiles.close()
+--   end
+-- end, { desc = 'Toggle explorer' })
 
-map('n', '<leader>E', function ()
-  if MiniFiles.get_explorer_state() == nil then
-    MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
-  else
-    MiniFiles.close()
-  end
-end, { desc = 'Toggle explorer' })
 
 map('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev buffer' })
 map('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next buffer' })

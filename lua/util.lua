@@ -11,6 +11,23 @@ vim.api.nvim_create_user_command('Whitesmiths', function (opts)
   -- prepend the `{` rule, then the `}` rule
   vim.opt.cinoptions = '{1s,}0s'
 end, { nargs = 0 })
+
+vim.api.nvim_create_user_command('GNU', function (opts)
+  -- enable GNU‐style C indenting
+  vim.o.cindent = true
+  -- hard tabs, no expandtab
+  vim.o.expandtab = false
+  vim.o.tabstop = 4
+  vim.o.shiftwidth = 2
+  vim.o.softtabstop = 0
+  -- cinoptions matching GNU
+  vim.o.cinoptions = 'j1,f0,^-2,{2,>4,:4,n-2,(0,t0 sw=2 ts=4 noet'
+end, { nargs = 0 })
+
+-- vim.api.nvim_create_user_command('Sum', function (opts)
+--   vim.fn.eval(":echo eval(join(getline(\"'<\", \"'>\"), '+'))")
+-- end, { nargs = 0 })
+
 vim.api.nvim_create_user_command('ToHex', function (opts)
   local n = tonumber(opts.args)
   if n ~= nil then

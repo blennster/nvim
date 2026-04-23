@@ -1,3 +1,11 @@
+---@return string
+local function get_git_root()
+  local path = vim.api.nvim_buf_get_name(0)
+  path = path ~= '' and vim.fs.dirname(path) or vim.loop.cwd()
+  local git_dir = vim.fs.find('.git', { path = path, upward = true })[1]
+  return git_dir and vim.fs.dirname(git_dir) or require('util').get_root()
+end
+
 return {
   'nvim-neo-tree/neo-tree.nvim',
   branch = 'v3.x',
@@ -13,9 +21,9 @@ return {
     {
       '<leader>E',
       function ()
-        require('neo-tree.command').execute({ toggle = true, dir = vim.fn.expand('%:p:h') })
+        require('neo-tree.command').execute({ toggle = true, dir = vim.loop.cwd() })
       end,
-      desc = 'Explorer NeoTree (root dir)',
+      desc = 'Explorer NeoTree (cwd)',
     },
     {
       '<leader>e',
@@ -23,11 +31,10 @@ return {
         require('neo-tree.command').execute({
           toggle = true,
           reveal_file = vim.fn.expand('%:p'),
-          dir = require('util')
-              .get_root()
+          dir = get_git_root(),
         })
       end,
-      desc = 'Explorer NeoTree (cwd)',
+      desc = 'Explorer NeoTree (git root)',
     },
   },
   init = function ()
@@ -48,6 +55,8 @@ return {
     window = {
       mappings = {
         ['<space>'] = 'none',
+        ['h'] = 'close_node',
+        ['l'] = 'open'
       },
       position = 'current',
     },
