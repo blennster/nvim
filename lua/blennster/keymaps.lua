@@ -301,12 +301,6 @@ vim.api.nvim_create_user_command('GitsignsAttach',
       { buffer = bufnr, desc = '[g]it preview hun[k]' })
     map('n', '<leader>gb', gitsigns.blame_line,
       { buffer = bufnr, desc = '[g]it [b]lame' })
-    map('n', '<leader>gd', function ()
-        gitsigns.diffthis(nil, {
-          split = 'belowright'
-        })
-      end,
-      { buffer = bufnr, desc = '[g]it [d]iff' })
     map('n', '<leader>gr', gitsigns.reset_hunk,
       { buffer = bufnr, desc = '[g]it [r]eset hunk' })
     map('n', '<leader>gs', gitsigns.stage_hunk,
@@ -315,6 +309,16 @@ vim.api.nvim_create_user_command('GitsignsAttach',
       { buffer = bufnr, desc = '[g]it blame [l]ine' })
   end
   , { nargs = 1 })
+map('n', '<leader>gdd', function ()
+  local lib = require('diffview.lib')
+  local view = lib.get_current_view()
+  if view then
+    vim.cmd('DiffviewClose')
+  else
+    vim.cmd('DiffviewOpen')
+  end
+end, { desc = '[g]it [d]iff toggle' })
+map('n', '<leader>gdp', '<cmd>DiffviewOpen HEAD~1<cr>', { desc = '[g]it [d]iff with [p]arent' })
 map('n', '<leader>gg', '<cmd>LazyGit<cr>', { desc = 'Lazy [g]it' })
 
 map('n', '<leader>u', function ()
