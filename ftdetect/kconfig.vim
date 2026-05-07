@@ -1,0 +1,1 @@
+au BufRead,BufNewFile *.conf if expand('%:p') =~# '/boards/.*\.conf$' || expand('%:t') =~# '^prj.*\.conf$' || expand('%:t') ==# 'mcuboot.conf' || expand('%:t') =~# '^sysbuild.*\.conf$'| set filetype=kconfig | endif

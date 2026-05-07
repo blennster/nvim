@@ -25,8 +25,11 @@ return {
         end
 
         if parser ~= '' then
-          local alreadyInstalled = require('nvim-treesitter.config').get_installed()
-          if not vim.tbl_contains(alreadyInstalled, parser) then
+          local config = require('nvim-treesitter.config')
+          local available = config.get_available()
+          local alreadyInstalled = config.get_installed()
+
+          if vim.tbl_contains(available, parser) and not vim.tbl_contains(alreadyInstalled, parser) then
             require('nvim-treesitter').install(parser)
           end
         end
