@@ -1,8 +1,6 @@
---[[ - https://learnxinyminutes.com/docs/lua/ ]]
---
 -- Set <space> as the leader key
 -- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+-- NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.augroup = vim.api.nvim_create_augroup('blennster', { clear = true })
@@ -74,9 +72,3 @@ require('lazy').setup({
 require 'blennster.keymaps'
 require 'blennster.autocmds'
 require 'blennster.autoformat'
-
--- Turn of LSP logging by default
--- vim.lsp.set_log_level('off')
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 et:

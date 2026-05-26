@@ -66,25 +66,11 @@ if not has('neo-tree.nvim') then
   end, { desc = 'Toggle explorer' })
 end
 
--- map('n', '<leader>e', function ()
---   if MiniFiles.get_explorer_state() == nil then
---     MiniFiles.open()
---   else
---     MiniFiles.close()
---   end
--- end, { desc = 'Toggle explorer' })
---
--- map('n', '<leader>E', function ()
---   if MiniFiles.get_explorer_state() == nil then
---     MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
---   else
---     MiniFiles.close()
---   end
--- end, { desc = 'Toggle explorer' })
 
-
-map('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev buffer' })
-map('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next buffer' })
+if not has('harpoon') then
+  map('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev buffer' })
+  map('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next buffer' })
+end
 map('n', '[b', '<cmd>bprevious<cr>', { desc = 'Prev buffer' })
 map('n', ']b', '<cmd>bnext<cr>', { desc = 'Next buffer' })
 
@@ -139,37 +125,33 @@ if has('noice.nvim') then
   map('n', '<leader>nn', '<cmd>Noice<cr>', { desc = 'Noice' })
 end
 
-require 'which-key'.add(
-  {
-    { '<leader>s', group = 'search' },
-  }
-)
+-- which-key group for search bindings
+require 'which-key'.add({
+  { '<leader>s', group = 'search' },
+})
 
 vim.api.nvim_create_user_command('FzfBind',
   function ()
-    local builtin = require('fzf-lua')
+    local fzflua = require('fzf-lua')
 
-    -- See `:help telescope.builtin`
-    map('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
-    map('n', '<leader>sb', builtin.buffers, { desc = '[s]earch [b]uffers' })
+    -- See `:help fzf-lua`
+    map('n', '<leader>?', fzflua.oldfiles, { desc = '[?] Find recently opened files' })
+    map('n', '<leader>sb', fzflua.buffers, { desc = '[s]earch [b]uffers' })
     local git_file_search = function ()
-      if builtin.git_files() then
+      if fzflua.git_files() then
       else
-        builtin.files()
+        fzflua.files()
       end
     end
 
     map('n', 'ff', git_file_search, { desc = 'search [f]iles (git)' })
     map('n', '<leader>sf', git_file_search, { desc = '[s]earch [f]iles (git)' })
-    map('n', '<leader>sg', builtin.files, { desc = '[s]earch files (non git)' })
-    -- map('n', '<leader>sF', function ()
-    --   builtin.find_files { cwd = require('telescope.utils').buffer_dir() }
-    -- end, { desc = '[s]earch [F]iles (from here)' })
-    map('n', '<leader>sh', builtin.helptags, { desc = '[s]earch [h]elp' })
-    map('n', '<leader>sw', builtin.grep_cword, { desc = '[s]earch current [w]ord' })
-    map('n', '<leader>st', builtin.live_grep, { desc = '[s]earch [t]ext' })
-    map('n', '<leader>sk', builtin.keymaps, { desc = '[s]earch [k]eymaps' })
-    map('n', '<leader>sT', builtin.lgrep_curbuf, { desc = '[s]earch [T]ext in current buffer' })
+    map('n', '<leader>sg', fzflua.files, { desc = '[s]earch files (non git)' })
+    map('n', '<leader>sh', fzflua.helptags, { desc = '[s]earch [h]elp' })
+    map('n', '<leader>sw', fzflua.grep_cword, { desc = '[s]earch current [w]ord' })
+    map('n', '<leader>st', fzflua.live_grep, { desc = '[s]earch [t]ext' })
+    map('n', '<leader>sk', fzflua.keymaps, { desc = '[s]earch [k]eymaps' })
+    map('n', '<leader>sT', fzflua.lgrep_curbuf, { desc = '[s]earch [T]ext in current buffer' })
 
     map('n', '<leader>sc', '<cmd>TodoFzfLua<cr>', { desc = 'Search todos' })
   end, {})
@@ -192,7 +174,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.g.augroup,
   callback = function (args)
     local bufnr = args.buf
-    -- local client = vim.lsp.get_client_by_id(args.data.client_id)
 
     local lspmap = function (mode, keys, func, desc)
       if desc then
@@ -206,17 +187,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
     lspmap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
     lspmap('v', 'ga', vim.lsp.buf.code_action, 'Code [A]ction')
 
-    local builtin = require('fzf-lua')
+    local fzflua = require('fzf-lua')
 
-    lspmap('n', 'gd', builtin.lsp_definitions, '[G]oto [D]efinition')
-    lspmap('n', 'gr', builtin.lsp_references, '[G]oto [R]eferences')
-    lspmap('n', 'gI', builtin.lsp_implementations, '[G]oto [I]mplementation')
-    lspmap('n', 'gD', builtin.lsp_typedefs, 'Type [D]efinition')
+    lspmap('n', 'gd', fzflua.lsp_definitions, '[G]oto [D]efinition')
+    lspmap('n', 'gr', fzflua.lsp_references, '[G]oto [R]eferences')
+    lspmap('n', 'gI', fzflua.lsp_implementations, '[G]oto [I]mplementation')
+    lspmap('n', 'gy', fzflua.lsp_typedefs, 'Type [D]efinition')
 
 
-    lspmap('n', '<leader>si', builtin.lsp_incoming_calls,
+    lspmap('n', '<leader>si', fzflua.lsp_incoming_calls,
       '[S]earch [i]ncoming calls')
-    lspmap('n', '<leader>so', builtin.lsp_outgoing_calls,
+    lspmap('n', '<leader>so', fzflua.lsp_outgoing_calls,
       '[S]earch [o]utgoing calls')
 
     lspmap('n', '<leader>cs', function () vim.lsp.buf.signature_help { border = 'rounded' } end, 'Show [S]ignature help')
@@ -226,17 +207,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
     end, 'Toggle [i]nlay hints')
 
-    lspmap('n', 'gO', builtin.lsp_document_symbols, '[S]earch Document [S]ymbols')
-    lspmap('n', '<leader>ss', builtin.lsp_document_symbols, '[S]earch Document [S]ymbols')
-    lspmap('n', '<leader>sS', builtin.lsp_workspace_symbols,
+    lspmap('n', 'gO', fzflua.lsp_document_symbols, '[S]earch Document [S]ymbols')
+    lspmap('n', '<leader>ss', fzflua.lsp_document_symbols, '[S]earch Document [S]ymbols')
+    lspmap('n', '<leader>sS', fzflua.lsp_workspace_symbols,
       '[S]earch Workspace [S]ymbols')
 
-    lspmap('n', '<leader>sd', builtin.lsp_document_diagnostics, '[s]earch document [d]iagnostics')
-    lspmap('n', '<leader>sD', builtin.lsp_workspace_diagnostics, '[s]earch workspace [d]iagnostics')
+    lspmap('n', '<leader>sd', fzflua.lsp_document_diagnostics, '[s]earch document [d]iagnostics')
+    lspmap('n', '<leader>sD', fzflua.lsp_workspace_diagnostics, '[s]earch workspace [d]iagnostics')
 
     -- See `:help K` for why this keymap
     lspmap('n', 'K', function () vim.lsp.buf.hover { border = 'rounded' } end, 'Hover Documentation')
-    -- lspmap('n', 'K', require('pretty_hover').hover, 'Hover Documentation')
 
     -- Lesser used LSP functionality
     lspmap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -246,13 +226,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
     lspmap('n', '<leader>ch', require('clangd_extensions.switch_source_header').switch_source_header,
       'Switch source/[h]eader')
 
+    -- which-key group for code/LSP bindings
     require 'which-key'.add({
       { '<leader>c', group = 'code' }
     })
 
     -- Diagnostic keymaps
-    lspmap('n', '[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
-    lspmap('n', ']d', vim.diagnostic.goto_next, 'Go to next diagnostic message')
+    lspmap('n', '[d', function ()
+      vim.diagnostic.jump({ count = -1 })
+    end, 'Go to previous diagnostic message')
+    lspmap('n', ']d', function ()
+      vim.diagnostic.jump({ count = 1 })
+    end, 'Go to next diagnostic message')
     lspmap('n', 'gl', vim.diagnostic.open_float, 'Open floating diagnostic message')
     lspmap('n', '<leader>cd', vim.diagnostic.setloclist, 'Open diagnostics list')
     lspmap('n', '<leader>cD', vim.diagnostic.setloclist, 'Search workspace diagnostics list')
@@ -264,7 +249,7 @@ vim.api.nvim_create_user_command('DapBind',
     local dap = require('dap')
     local dapui = require('dapui')
 
-    -- See `:help telescope.builtin`
+    -- DAP keymaps
     map('n', '<leader>dd', dap.continue, { desc = 'dap continue/start' })
     map('n', '<leader>dc', dap.run_to_cursor, { desc = 'run to cursor' })
     map('n', '<leader>db', dap.toggle_breakpoint, { desc = 'dap toggle breakpoint' })
@@ -273,8 +258,6 @@ vim.api.nvim_create_user_command('DapBind',
       dap.set_breakpoint(cond)
     end, { desc = 'dap toggle breakpoint' })
 
-    -- local view = require 'dap.ui.widgets'.hover()
-    -- map('n', '<leader>dk', view.toggle, { desc = 'dap hover' })
     map('n', '<leader>ds', dap.step_over, { desc = 'dap step over' })
     map('n', '<leader>di', dap.step_into, { desc = 'dap step into' })
     map('n', '<leader>do', dap.step_out, { desc = 'dap step out' })
@@ -286,6 +269,7 @@ vim.api.nvim_create_user_command('DapBind',
     map('n', '<leader>dr', dap.run_last, { desc = 'dap rerun' })
   end, {})
 
+-- which-key group for git bindings
 require 'which-key'.add({
   { '<leader>g', group = 'git' }
 })
@@ -330,10 +314,6 @@ end, { desc = '[u]ndotree' })
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }
   map('t', '<C-esc>', [[<C-\><C-n>]], opts)
-  -- map('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-  -- map('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-  -- map('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-  -- map('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
   map('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
 end
 

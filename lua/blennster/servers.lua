@@ -156,21 +156,35 @@ M.servers = function ()
     harper_ls = {
       filetypes = { 'markdown' }
     },
-  }
-
-  if 0 == 1 then
-    servers.clangd = nil
-    servers.sourcekit = {
-      root_dir = require('lspconfig').util.root_pattern('buildServer.json', '*.xcodeproj', '*.xcworkspace',
-        'compile_commands.json', 'Package.swift', '.git', '.clang-format', '.clangd'),
-      single_file_support = true,
-      cmd = {
-        'sourcekit-lsp',
-        '-Xclangd',
-        '--query-driver=/opt/homebrew/bin/*gcc'
+    devicetree_ls = {
+      cmd = { 'devicetree-language-server', '--stdio' },
+      filetypes = { 'dts', 'dtsi' },
+      -- root_dir = lspconfig.util.root_pattern('zephyr', '.git', '.'),
+      settings = {
+        devicetree = {
+          defaultIncludePaths = {
+            '../nrf/boards',
+            './zephyr/dts',
+            './zephyr/dts/arm',
+            './zephyr/dts/arm64/',
+            './zephyr/dts/riscv',
+            './zephyr/dts/common',
+            './zephyr/dts/vendor',
+            './zephyr/include'
+          },
+          cwd = '${workspaceFolder}',
+          defaultBindingType = 'Zephyr',
+          defaultZephyrBindings = {
+            './zephyr/dts/bindings'
+          },
+          autoChangeContext = true,
+          allowAdhocContexts = true,
+          contexts = {},
+        },
       }
     }
-  end
+  }
+
 
   if vim.fn.filereadable(vim.loop.cwd() .. '/tools/gopackagesdriver.sh') == 1 then
     -- if true then

@@ -17,6 +17,6 @@ return {
       })
     end
   },
-  -- Useful plugin to show you pending keybinds.
+  -- Which-key: shows pending keybindings and groups
   { 'folke/which-key.nvim', opts = { icons = { mappings = false } } },
 }

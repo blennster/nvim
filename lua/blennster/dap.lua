@@ -10,12 +10,9 @@ return {
         type = 'server',
         port = port,
         executable = {
-          -- command = '/Users/now/.local/share/nvim/mason/bin/codelldb',
           command = 'codelldb',
           args = { '--port', port },
 
-          -- On windows you may have to uncomment this:
-          -- detached = false,
         }
       }
 
@@ -54,12 +51,6 @@ return {
       dap.listeners.before.launch.dapui_config = function ()
         dapui.open()
       end
-      -- dap.listeners.before.event_terminated.dapui_config = function ()
-      --   dapui.close()
-      -- end
-      -- dap.listeners.before.event_exited.dapui_config = function ()
-      --   dapui.close()
-      -- end
 
       vim.cmd([[ DapBind ]])
     end

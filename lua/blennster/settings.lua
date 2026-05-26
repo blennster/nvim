@@ -42,8 +42,8 @@ vim.o.timeoutlen = 300
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
-vim.o.sw = 0
-vim.o.ts = 4
+vim.o.shiftwidth = 0
+vim.o.tabstop = 4
 vim.o.smartindent = true
 vim.o.autoindent = true
 vim.o.expandtab = true
@@ -71,6 +71,3 @@ if vim.fn.has('win32') == 1 then
   end
 end
 
-vim.cmd [[set nocp]]
-vim.cmd [[filetype plugin on]]
-vim.cmd [[syntax on]]

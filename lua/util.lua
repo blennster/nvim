@@ -24,9 +24,6 @@ vim.api.nvim_create_user_command('GNU', function (opts)
   vim.o.cinoptions = 'j1,f0,^-2,{2,>4,:4,n-2,(0,t0 sw=2 ts=4 noet'
 end, { nargs = 0 })
 
--- vim.api.nvim_create_user_command('Sum', function (opts)
---   vim.fn.eval(":echo eval(join(getline(\"'<\", \"'>\"), '+'))")
--- end, { nargs = 0 })
 
 vim.api.nvim_create_user_command('ToHex', function (opts)
   local n = tonumber(opts.args)
