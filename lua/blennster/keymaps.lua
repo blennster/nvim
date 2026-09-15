@@ -157,6 +157,10 @@ vim.api.nvim_create_user_command('FzfBind',
   end, {})
 
 -- Spectre - search and replace
+map('n', '<leader>sr', function ()
+  require('spectre').toggle()
+end, { desc = '[s]earch and [r]eplace (Spectre toggle)' })
+
 vim.api.nvim_create_user_command('Spectre', function (opts)
   local args = opts.fargs
   if #args == 0 then
