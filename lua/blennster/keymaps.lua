@@ -156,21 +156,18 @@ vim.api.nvim_create_user_command('FzfBind',
     map('n', '<leader>sc', '<cmd>TodoFzfLua<cr>', { desc = 'Search todos' })
   end, {})
 
--- Spectre - search and replace
+-- grug-far - search and replace
 map('n', '<leader>sr', function ()
-  require('spectre').toggle()
-end, { desc = '[s]earch and [r]eplace (Spectre toggle)' })
+  require('grug-far').toggle_instance({ instanceName = 'far' })
+end, { desc = '[s]earch and [r]eplace (grug-far toggle)' })
 
-vim.api.nvim_create_user_command('Spectre', function (opts)
-  local args = opts.fargs
-  if #args == 0 then
-    require('spectre').open()
-  elseif args[1] == 'word' then
-    require('spectre').open_visual({ select_word = true })
-  elseif args[1] == 'file' then
-    require('spectre').open_file_search()
-  end
-end, { nargs = '*', desc = 'Spectre: :Spectre, :Spectre word, :Spectre file' })
+vim.api.nvim_create_user_command('GrugFarWord', function ()
+  require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } })
+end, { desc = 'Search and replace current word' })
+
+vim.api.nvim_create_user_command('GrugFarFile', function ()
+  require('grug-far').open({ prefills = { paths = vim.fn.expand('%') } })
+end, { desc = 'Search and replace in current file' })
 
 
 -- LSP bindings
